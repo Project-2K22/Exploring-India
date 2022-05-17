@@ -18,7 +18,7 @@ const Routes = () => {
                     <Route path="home" element={<HomePage />} />
                     <Route path="user-preference" element={<UserPreference />} />
                     <Route path="user-profile" element={<UserProfile />} />
-                    <Route path="*" element={<Navigate to="/signup" replace />} />
+                    <Route path="*" element={<Navigate to="/login" replace />} />
                 </RS>
             </Router>
         </div>

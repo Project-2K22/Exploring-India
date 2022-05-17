@@ -84,9 +84,16 @@ const Signup = () => {
                 // Signed in
                 setLoading(false);
                 const user = userCredential.user;
-                addUserIntoDatabase(user.uid, { name: form.name, email: form.email });
+                addUserIntoDatabase(user.uid, {
+                    name: form.name,
+                    email: form.email,
+                    age: -1,
+                    phoneno: -1,
+                    gender: -1,
+                    dplink: `https://avatars.dicebear.com/api/avataaars/${form.name}.svg`,
+                });
                 localStorage.setItem('user-name', form.name);
-                navigate('/user-preference');
+                navigate('/user-preference', { state: { uid: user.uid } });
                 resetForm();
             })
             .catch(error => {
