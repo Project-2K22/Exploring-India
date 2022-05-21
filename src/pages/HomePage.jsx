@@ -4,8 +4,8 @@ import { signOut } from 'firebase/auth';
 import { auth, db } from '../firebase/config';
 import { onAuthStateChanged } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
-import SmallCards from '../components/SmallCard';
-import BigCard from '../components/BigCard';
+import ImageCard from '../components/ImageCard';
+import IndexCard from '../components/IndexCard';
 const HomePage = () => {
     const navigate = useNavigate();
 
@@ -27,7 +27,7 @@ const HomePage = () => {
     };
 
     return (
-        <div>
+        <div style={{backgroundImage:"url(https://picsum.photos/seed/picsum/200/300)"}}>
             HomePage
             {/* Logout just for testing purpose */}
             <div>
@@ -39,12 +39,13 @@ const HomePage = () => {
             </div>
             <div className="cards">
                 {/* for small card example */}
-                {/* <Stack direction="row"  spacing={0}>
-                    <SmallCards value={{placeName:"Victoria Memorial",city:"Kolkata",buttonName:"view"}}/>
-                </Stack> */}
+                <Stack direction="row"  spacing={0}>
+                    <ImageCard value={{placeName:"Victoria Memorial",city:"Kolkata",buttonName:"view"}}/>
+                    {/* <ImageCard value={{placeName:"Victoria Memorial",city:"Kolkata",buttonName:"view"}}/> */}
+                </Stack>
                 {/* big card example */}
-                <Stack divider={<Divider orientation="vertical" flexItem />} spacing={2}>
-                    {/* {[
+                {/* <Stack divider={<Divider orientation="vertical" flexItem />} spacing={2}>
+                    {[
                         {
                             feature: 'Interactive Map',
                             description: 'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Fuga, unde.',
@@ -54,9 +55,9 @@ const HomePage = () => {
                             description: 'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Fuga, unde.',
                         },
                     ].map((props, idx) => (
-                        <BigCard value={{ ...props, idx: idx }} key={idx} />
-                    ))} */}
-                </Stack>
+                        <IndexCard value={{ ...props, idx: idx }} key={idx} />
+                    ))}
+                </Stack> */}
             </div>
         </div>
     );
