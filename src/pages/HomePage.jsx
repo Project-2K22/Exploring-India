@@ -4,7 +4,8 @@ import { signOut } from 'firebase/auth';
 import { auth, db } from '../firebase/config';
 import { onAuthStateChanged } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
-
+import NavBar from '../components/NavBar';
+import PlaceViewTop from '../components/PlaceViewTop';
 const HomePage = () => {
     const navigate = useNavigate();
 
@@ -24,9 +25,9 @@ const HomePage = () => {
                 navigate('/home');
             });
     };
-
     return (
         <div>
+            <PlaceViewTop />
             HomePage
             {/* Logout just for testing purpose */}
             <div>
