@@ -4,8 +4,8 @@ import { signOut } from 'firebase/auth';
 import { auth, db } from '../firebase/config';
 import { onAuthStateChanged } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
-import SmallCards from '../components/SmallCard';
-import BigCard from '../components/BigCard';
+import ImageCard from '../components/ImageCard';
+import IndexCard from '../components/IndexCard';
 const HomePage = () => {
     const navigate = useNavigate();
 
@@ -40,8 +40,8 @@ const HomePage = () => {
             <div className="cards">
                 {/* for small card example */}
                 <Stack direction="row"  spacing={0}>
-                    <SmallCards value={{placeName:"Victoria Memorial",city:"Kolkata",buttonName:"view"}}/>
-                    {/* <SmallCards value={{placeName:"Victoria Memorial",city:"Kolkata",buttonName:"view"}}/> */}
+                    <ImageCard value={{placeName:"Victoria Memorial",city:"Kolkata",buttonName:"view"}}/>
+                    {/* <ImageCard value={{placeName:"Victoria Memorial",city:"Kolkata",buttonName:"view"}}/> */}
                 </Stack>
                 {/* big card example */}
                 {/* <Stack divider={<Divider orientation="vertical" flexItem />} spacing={2}>
@@ -55,7 +55,7 @@ const HomePage = () => {
                             description: 'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Fuga, unde.',
                         },
                     ].map((props, idx) => (
-                        <BigCard value={{ ...props, idx: idx }} key={idx} />
+                        <IndexCard value={{ ...props, idx: idx }} key={idx} />
                     ))}
                 </Stack> */}
             </div>

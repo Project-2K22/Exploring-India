@@ -1,7 +1,7 @@
 import { Typography } from '@mui/material';
 import { Box } from '@mui/system';
 
-const BigCard = props => {
+const IndexCard = props => {
     
     return (
         <div style={{ position: 'relative', marginBottom: '20px' }}>
@@ -54,6 +54,6 @@ const BigCard = props => {
     );
 };
 
-export default BigCard;
+export default IndexCard;
 
 

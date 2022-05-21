@@ -1,7 +1,7 @@
-import { Button, Card, CardActions, CardContent, CardMedia, Divider, Stack, Typography } from '@mui/material';
+import { Button, CardActions,  Stack, Typography } from '@mui/material';
 import { Box } from '@mui/system';
 
-const SmallCards = props => {
+const ImageCard = props => {
     console.log(props);
     return (
         <Stack
@@ -56,4 +56,4 @@ const SmallCards = props => {
     );
 };
 
-export default SmallCards;
+export default ImageCard;
