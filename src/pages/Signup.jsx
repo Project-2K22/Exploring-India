@@ -8,7 +8,8 @@ import {
     FilledInput,
     InputLabel,
     CssBaseline,
-    Divider,
+    Paper,
+    Grid,
 } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
 import PersonIcon from '@mui/icons-material/Person';
@@ -57,7 +58,13 @@ const Signup = () => {
     };
 
     const addUserIntoDatabase = (uid, data) => {
-        set(ref(db, 'users/' + uid), { ...data });
+        set(ref(db, 'users/' + uid), { ...data })
+            .then(() => {
+                navigate('/user-preference', { state: { uid: uid } });
+                localStorage.setItem('user-name', form.name);
+                resetForm();
+            })
+            .catch(() => setAlert({ visible: true, message: 'Database error. Try again later.', type: 'error' }));
     };
 
     const handleFormSubmit = () => {
@@ -92,9 +99,6 @@ const Signup = () => {
                     gender: -1,
                     dplink: `https://avatars.dicebear.com/api/avataaars/${form.name}.svg`,
                 });
-                localStorage.setItem('user-name', form.name);
-                navigate('/user-preference', { state: { uid: user.uid } });
-                resetForm();
             })
             .catch(error => {
                 const errorMessage = error.message;
@@ -104,112 +108,115 @@ const Signup = () => {
     };
 
     return (
-        <>
+        <React.Fragment>
             <CssBaseline />
             <SnackBarBox alert={alert} setAlert={setAlert} />
-            <Stack direction="row" alignItems="center" justifyContent="space-between">
-                <Box sx={{ width: '50%' }}>
-                    <StackBox w="70%">
-                        <Box sx={{ marginBottom: '30px' }}>
-                            <Typography variant="h1" fontWeight={'bold'}>
-                                Sign Up
-                            </Typography>
-                        </Box>
-                        <div>
-                            <Stack spacing={3}>
-                                <FormControl fullWidth variant="filled">
-                                    <InputLabel htmlFor="outlined-adornment-name">Name</InputLabel>
-                                    <FilledInput
-                                        id="outlined-adornment-name"
-                                        value={form.name}
-                                        onChange={e =>
-                                            setForm({
-                                                ...form,
-                                                name: e.target.value,
-                                            })
-                                        }
-                                        endAdornment={<PersonIcon />}
-                                    />
-                                </FormControl>
-                                <FormControl fullWidth variant="filled">
-                                    <InputLabel htmlFor="outlined-adornment-email">Email</InputLabel>
-                                    <FilledInput
-                                        type="email"
-                                        id="outlined-adornment-email"
-                                        value={form.email}
-                                        onChange={e =>
-                                            setForm({
-                                                ...form,
-                                                email: e.target.value,
-                                            })
-                                        }
-                                        endAdornment={<EmailIcon />}
-                                    />
-                                </FormControl>
-                                <FormControl fullWidth variant="filled">
-                                    <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
-                                    <FilledInput
-                                        id="outlined-adornment-password"
-                                        type="password"
-                                        value={form.password}
-                                        onChange={e =>
-                                            setForm({
-                                                ...form,
-                                                password: e.target.value,
-                                            })
-                                        }
-                                        endAdornment={<KeyIcon />}
-                                    />
-                                </FormControl>
-                                <FormControl fullWidth variant="filled">
-                                    <InputLabel htmlFor="outlined-adornment-confirm-password">
-                                        Confirm Password
-                                    </InputLabel>
-                                    <FilledInput
-                                        id="outlined-adornment-confirm-password"
-                                        type="password"
-                                        value={form.confirmPassword}
-                                        onChange={e =>
-                                            setForm({
-                                                ...form,
-                                                confirmPassword: e.target.value,
-                                            })
-                                        }
-                                        endAdornment={<KeyIcon />}
-                                    />
-                                </FormControl>
-                                <Stack direction={'row'} alignItems="center" justifyContent={'space-between'}>
-                                    <Stack direction={'row'} spacing={2}>
-                                        <LinkTo to="/login">
-                                            <Button size="small" sx={{ color: 'gray' }}>
-                                                Log In
-                                            </Button>
-                                        </LinkTo>
-                                    </Stack>
-                                    <LoadingButton onClick={handleFormSubmit} variant="contained" loading={loading}>
-                                        Sign Up
-                                    </LoadingButton>
-                                </Stack>
-                            </Stack>
-                        </div>
-                    </StackBox>
-                </Box>
-                <Divider orientation="vertical" variant="middle" flexItem />
-                <Box sx={{ width: '50%' }}>
-                    <StackBox w="80%">
-                        <Stack justifyContent="space-around">
-                            <Box>
-                                <Typography>Start planning your</Typography>
-                                <Typography variant="h1" fontWeight="bold">
-                                    Journey
+            <Box>
+                <Grid container width={'100%'} direction="row">
+                    <Grid item xs={6}>
+                        <StackBox w="70%">
+                            <Box sx={{ marginBottom: '30px' }}>
+                                <Typography variant="h1" fontWeight={'bold'}>
+                                    Sign Up
                                 </Typography>
                             </Box>
-                            <Typography>“A journey of a thousand miles begins with a single step” – Lao Tzu</Typography>
-                        </Stack>
-                    </StackBox>
-                </Box>
-            </Stack>
-        </>
+                            <div>
+                                <Stack spacing={3}>
+                                    <FormControl fullWidth variant="filled">
+                                        <InputLabel htmlFor="outlined-adornment-name">Name</InputLabel>
+                                        <FilledInput
+                                            id="outlined-adornment-name"
+                                            value={form.name}
+                                            onChange={e =>
+                                                setForm({
+                                                    ...form,
+                                                    name: e.target.value,
+                                                })
+                                            }
+                                            endAdornment={<PersonIcon />}
+                                        />
+                                    </FormControl>
+                                    <FormControl fullWidth variant="filled">
+                                        <InputLabel htmlFor="outlined-adornment-email">Email</InputLabel>
+                                        <FilledInput
+                                            type="email"
+                                            id="outlined-adornment-email"
+                                            value={form.email}
+                                            onChange={e =>
+                                                setForm({
+                                                    ...form,
+                                                    email: e.target.value,
+                                                })
+                                            }
+                                            endAdornment={<EmailIcon />}
+                                        />
+                                    </FormControl>
+                                    <FormControl fullWidth variant="filled">
+                                        <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
+                                        <FilledInput
+                                            id="outlined-adornment-password"
+                                            type="password"
+                                            value={form.password}
+                                            onChange={e =>
+                                                setForm({
+                                                    ...form,
+                                                    password: e.target.value,
+                                                })
+                                            }
+                                            endAdornment={<KeyIcon />}
+                                        />
+                                    </FormControl>
+                                    <FormControl fullWidth variant="filled">
+                                        <InputLabel htmlFor="outlined-adornment-confirm-password">
+                                            Confirm Password
+                                        </InputLabel>
+                                        <FilledInput
+                                            id="outlined-adornment-confirm-password"
+                                            type="password"
+                                            value={form.confirmPassword}
+                                            onChange={e =>
+                                                setForm({
+                                                    ...form,
+                                                    confirmPassword: e.target.value,
+                                                })
+                                            }
+                                            endAdornment={<KeyIcon />}
+                                        />
+                                    </FormControl>
+                                    <Stack direction={'row'} alignItems="center" justifyContent={'space-between'}>
+                                        <Stack direction={'row'} spacing={2}>
+                                            <LinkTo to="/login">
+                                                <Button size="small" sx={{ color: 'gray' }}>
+                                                    Log In
+                                                </Button>
+                                            </LinkTo>
+                                        </Stack>
+                                        <LoadingButton onClick={handleFormSubmit} variant="contained" loading={loading}>
+                                            Sign Up
+                                        </LoadingButton>
+                                    </Stack>
+                                </Stack>
+                            </div>
+                        </StackBox>
+                    </Grid>
+                    <Grid item xs={6}>
+                        <StackBox w="80%">
+                            <Stack justifyContent="space-around">
+                                <Box>
+                                    <Typography>Start planning your</Typography>
+                                    <Typography variant="h1" fontWeight="bold">
+                                        Journey
+                                    </Typography>
+                                </Box>
+                                <Typography>
+                                    “A journey of a thousand miles begins with a single step” – Lao Tzu
+                                </Typography>
+                            </Stack>
+                        </StackBox>
+                    </Grid>
+                </Grid>
+            </Box>
+        </React.Fragment>
     );
 };
 

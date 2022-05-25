@@ -4,28 +4,18 @@ import { LoadingButton } from '@mui/lab';
 import EmailIcon from '@mui/icons-material/Email';
 import KeyIcon from '@mui/icons-material/Key';
 
-import SnackBarBox from '../components/SnackBarBox';
-import StackBox from '../components/StackBox';
+import SnackBarBox from '../../components/SnackBarBox';
+import StackBox from '../../components/StackBox';
 
-import LinkTo from '../components/LinkTo';
+import LinkTo from '../../components/LinkTo';
 
 // firebase
-import { auth, db } from '../firebase/config';
-import { signInWithEmailAndPassword, onAuthStateChanged } from 'firebase/auth';
+import { auth, db } from '../../firebase/config';
+import { signInWithEmailAndPassword } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
+import { child, get, ref } from 'firebase/database';
 
-const Login = () => {
-    useEffect(() => {
-        onAuthStateChanged(auth, user => {
-            if (user) {
-                const uid = user.uid;
-                navigate('/home');
-            } else {
-                navigate('/login');
-            }
-        });
-    }, []);
-
+const AdminLogin = () => {
     const [form, setForm] = useState({
         email: '',
         password: '',
@@ -43,6 +33,35 @@ const Login = () => {
 
     const resetForm = () => {
         setForm({ email: '', password: '' });
+    };
+
+    const checkAdminPermission = uid => {
+        const adminRef = ref(db);
+        get(child(adminRef, `admins/${uid}`))
+            .then(snapshot => {
+                if (snapshot.exists()) {
+                    const data = snapshot.val();
+                    if (data.granted === 'true') {
+                        navigate('/admin/dashboard');
+                        localStorage.setItem('admin_sign_in_status', true);
+                    } else if (data.granted === 'false') {
+                        setAlert({
+                            visible: true,
+                            message: "Your account has'nt verified by RootAdmin yet",
+                            type: 'warning',
+                        });
+                    } else {
+                        setAlert({
+                            visible: true,
+                            message: 'Your admin account request has been rejected',
+                            type: 'error',
+                        });
+                    }
+                } else {
+                    setAlert({ visible: true, message: 'Your admin account is not valid', type: 'error' });
+                }
+            })
+            .catch(error => setAlert({ visible: true, message: error, type: 'error' }));
     };
 
     const handleFormSubmit = () => {
@@ -63,10 +82,10 @@ const Login = () => {
                 // Signed in
                 const user = userCredential.user;
                 setLoading(false);
-                navigate('/home');
                 resetForm();
-
-                console.log(user);
+                // check admin permission
+                checkAdminPermission(user.uid);
+                // console.log(user);
             })
             .catch(error => {
                 const errorMessage = error.message;
@@ -81,11 +100,11 @@ const Login = () => {
             <SnackBarBox alert={alert} setAlert={setAlert} />
             <Box>
                 <Grid container width={'100%'}>
-                    <Grid item xs={6}>
+                    <Grid item xs={12}>
                         <StackBox w="70%">
                             <Box sx={{ marginBottom: '30px' }}>
                                 <Typography variant="h1" fontWeight={'bold'}>
-                                    Sign In
+                                    Admin Sign In
                                 </Typography>
                             </Box>
                             <div>
@@ -119,54 +138,30 @@ const Login = () => {
                                             endAdornment={<KeyIcon />}
                                         />
                                     </FormControl>
-                                    <Stack direction={'row'} alignItems="center" justifyContent={'space-between'}>
-                                        <Stack direction={'row'} spacing={2}>
-                                            <LinkTo to="/signup">
-                                                <Button size="small" sx={{ color: 'gray' }}>
-                                                    Sign Up
-                                                </Button>
-                                            </LinkTo>
-                                            <LinkTo to="/forgot-password">
-                                                <Button size="small" sx={{ color: 'gray' }}>
-                                                    Forgot Password
-                                                </Button>
-                                            </LinkTo>
-                                        </Stack>
-                                        <LoadingButton onClick={handleFormSubmit} variant="contained" loading={loading}>
-                                            Log In
+                                    <Stack direction={'row'} justifyContent="space-between">
+                                        <LinkTo to="/admin/register">
+                                            <Button size="small" sx={{ color: 'gray' }}>
+                                                Register yourself as Admin
+                                            </Button>
+                                        </LinkTo>
+                                        <LoadingButton
+                                            onClick={handleFormSubmit}
+                                            variant="contained"
+                                            loading={loading}
+                                            color="error"
+                                        >
+                                            Admin Log In
                                         </LoadingButton>
                                     </Stack>
                                 </Stack>
                             </div>
-                            <div>
-                                <LinkTo to="/admin/signin">
-                                    <Button size="small" sx={{ color: 'gray' }}>
-                                        Admin Login
-                                    </Button>
-                                </LinkTo>
-                            </div>
                         </StackBox>
                     </Grid>
                     {/* <Divider orientation="vertical" variant="middle" flexItem /> */}
-                    <Grid item xs={6}>
-                        <StackBox w="80%">
-                            <Stack justifyContent="space-around">
-                                <Box>
-                                    <Typography>Start planning your</Typography>
-                                    <Typography variant="h1" fontWeight="bold">
-                                        Journey
-                                    </Typography>
-                                </Box>
-                                <Typography>
-                                    “A journey of a thousand miles begins with a single step” – Lao Tzu
-                                </Typography>
-                            </Stack>
-                        </StackBox>
-                    </Grid>
                 </Grid>
             </Box>
         </>
     );
 };
 
-export default Login;
+export default AdminLogin;
