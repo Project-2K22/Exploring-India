@@ -6,6 +6,7 @@ import ForgotPassword from './pages/ForgotPassword';
 import HomePage from './pages/HomePage';
 import UserPreference from './pages/UserPreference';
 import UserProfile from './pages/UserProfile';
+import PlaceDetails from "./pages/PlaceDetails"
 
 const Routes = () => {
     return (
@@ -16,6 +17,7 @@ const Routes = () => {
                     <Route path="login" element={<Login />} />
                     <Route path="forgot-password" element={<ForgotPassword />} />
                     <Route path="home" element={<HomePage />} />
+                    <Route path="place-details" element={<PlaceDetails />} />
                     <Route path="user-preference" element={<UserPreference />} />
                     <Route path="user-profile" element={<UserProfile />} />
                     <Route path="*" element={<Navigate to="/login" replace />} />
