@@ -79,90 +79,96 @@ const Login = () => {
         <>
             <CssBaseline />
             <SnackBarBox alert={alert} setAlert={setAlert} />
-            <Box>
+            <Box
+                sx={{
+                    background:
+                        'url(https://firebasestorage.googleapis.com/v0/b/exploring-india.appspot.com/o/auth_images%2Flogin%2Fpexels-francesco-ungaro-998646.jpg?alt=media&token=e3942308-c027-4656-af88-7aeeb462acd8    )',
+                    backgroundSize: 'cover',
+                    objectFit: 'center',
+                }}
+            >
                 <Grid container width={'100%'}>
-                    <Grid item xs={6}>
-                        <StackBox w="70%">
-                            <Box sx={{ marginBottom: '30px' }}>
-                                <Typography variant="h1" fontWeight={'bold'}>
-                                    Sign In
-                                </Typography>
-                            </Box>
-                            <div>
-                                <Stack spacing={3}>
-                                    <FormControl fullWidth variant="filled">
-                                        <InputLabel htmlFor="outlined-adornment-email">Email</InputLabel>
-                                        <FilledInput
-                                            id="outlined-adornment-email"
-                                            value={form.email}
-                                            onChange={e =>
-                                                setForm({
-                                                    ...form,
-                                                    email: e.target.value,
-                                                })
-                                            }
-                                            endAdornment={<EmailIcon />}
-                                        />
-                                    </FormControl>
-                                    <FormControl fullWidth variant="filled">
-                                        <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
-                                        <FilledInput
-                                            id="outlined-adornment-password"
-                                            type="password"
-                                            value={form.password}
-                                            onChange={e =>
-                                                setForm({
-                                                    ...form,
-                                                    password: e.target.value,
-                                                })
-                                            }
-                                            endAdornment={<KeyIcon />}
-                                        />
-                                    </FormControl>
-                                    <Stack direction={'row'} alignItems="center" justifyContent={'space-between'}>
-                                        <Stack direction={'row'} spacing={2}>
-                                            <LinkTo to="/signup">
-                                                <Button size="small" sx={{ color: 'gray' }}>
-                                                    Sign Up
-                                                </Button>
-                                            </LinkTo>
-                                            <LinkTo to="/forgot-password">
-                                                <Button size="small" sx={{ color: 'gray' }}>
-                                                    Forgot Password
-                                                </Button>
-                                            </LinkTo>
+                    <Grid item md={12} xs={12}>
+                        <StackBox w={{ md: '80%', xs: '100%' }}>
+                            <Box
+                                sx={{
+                                    padding: '20px',
+                                    background: 'rgba( 255, 255, 255, 0.2 )',
+                                    backdropFilter: 'blur( 20px )',
+                                    WebkitBackdropFilter: 'blur( 20px )',
+                                    border: '1px solid rgba( 255, 255, 255, 0.18 )',
+                                }}
+                            >
+                                <Box sx={{ marginBottom: '30px' }}>
+                                    <Typography variant={{ md: 'h1', xs: 'h2' }} fontWeight={'bold'}>
+                                        Sign In
+                                    </Typography>
+                                </Box>
+                                <div>
+                                    <Stack spacing={3}>
+                                        <FormControl fullWidth variant="filled">
+                                            <InputLabel htmlFor="outlined-adornment-email">Email</InputLabel>
+                                            <FilledInput
+                                                id="outlined-adornment-email"
+                                                value={form.email}
+                                                onChange={e =>
+                                                    setForm({
+                                                        ...form,
+                                                        email: e.target.value,
+                                                    })
+                                                }
+                                                endAdornment={<EmailIcon />}
+                                            />
+                                        </FormControl>
+                                        <FormControl fullWidth variant="filled">
+                                            <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
+                                            <FilledInput
+                                                id="outlined-adornment-password"
+                                                type="password"
+                                                value={form.password}
+                                                onChange={e =>
+                                                    setForm({
+                                                        ...form,
+                                                        password: e.target.value,
+                                                    })
+                                                }
+                                                endAdornment={<KeyIcon />}
+                                            />
+                                        </FormControl>
+                                        <Stack direction={'row'} alignItems="center" justifyContent={'space-between'}>
+                                            <Stack direction={'row'} spacing={2}>
+                                                <LinkTo to="/signup">
+                                                    <Button size="small" sx={{ color: 'black' }}>
+                                                        Sign Up
+                                                    </Button>
+                                                </LinkTo>
+                                                <LinkTo to="/forgot-password">
+                                                    <Button size="small" sx={{ color: 'black' }}>
+                                                        Forgot Password
+                                                    </Button>
+                                                </LinkTo>
+                                            </Stack>
+                                            <LoadingButton
+                                                onClick={handleFormSubmit}
+                                                variant="contained"
+                                                loading={loading}
+                                            >
+                                                Log In
+                                            </LoadingButton>
                                         </Stack>
-                                        <LoadingButton onClick={handleFormSubmit} variant="contained" loading={loading}>
-                                            Log In
-                                        </LoadingButton>
                                     </Stack>
-                                </Stack>
-                            </div>
-                            <div>
-                                <LinkTo to="/admin/signin">
-                                    <Button size="small" sx={{ color: 'gray' }}>
-                                        Admin Login
-                                    </Button>
-                                </LinkTo>
-                            </div>
+                                </div>
+                                <div>
+                                    <LinkTo to="/admin/signin">
+                                        <Button size="small" sx={{ color: 'black' }}>
+                                            Admin Login
+                                        </Button>
+                                    </LinkTo>
+                                </div>
+                            </Box>
                         </StackBox>
                     </Grid>
                     {/* <Divider orientation="vertical" variant="middle" flexItem /> */}
-                    <Grid item xs={6}>
-                        <StackBox w="80%">
-                            <Stack justifyContent="space-around">
-                                <Box>
-                                    <Typography>Start planning your</Typography>
-                                    <Typography variant="h1" fontWeight="bold">
-                                        Journey
-                                    </Typography>
-                                </Box>
-                                <Typography>
-                                    “A journey of a thousand miles begins with a single step” – Lao Tzu
-                                </Typography>
-                            </Stack>
-                        </StackBox>
-                    </Grid>
                 </Grid>
             </Box>
         </>

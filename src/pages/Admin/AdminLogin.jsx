@@ -101,9 +101,9 @@ const AdminLogin = () => {
             <Box>
                 <Grid container width={'100%'}>
                     <Grid item xs={12}>
-                        <StackBox w="70%">
+                        <StackBox w={{ md: '70%', xs: '90%' }}>
                             <Box sx={{ marginBottom: '30px' }}>
-                                <Typography variant="h1" fontWeight={'bold'}>
+                                <Typography variant={{ md: 'h1', xs: 'h2' }} fontWeight={'bold'}>
                                     Admin Sign In
                                 </Typography>
                             </Box>
@@ -138,7 +138,12 @@ const AdminLogin = () => {
                                             endAdornment={<KeyIcon />}
                                         />
                                     </FormControl>
-                                    <Stack direction={'row'} justifyContent="space-between">
+                                    <Stack
+                                        direction={{ md: 'row', xs: 'column-reverse' }}
+                                        alignItems={{ xs: 'flex-start' }}
+                                        justifyContent="space-between"
+                                        spacing={{ xs: 3 }}
+                                    >
                                         <LinkTo to="/admin/register">
                                             <Button size="small" sx={{ color: 'gray' }}>
                                                 Register yourself as Admin

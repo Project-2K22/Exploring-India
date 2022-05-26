@@ -29,7 +29,7 @@ const PlaceDetailsBasedOnId = () => {
 
     return (
         <BaseContainer w="lg">
-            {loading ? <Loader /> : <PlaceViewAndUpdateForm page={'admin'} place={place} />}
+            {loading ? <Loader /> : <PlaceViewAndUpdateForm placeId={id} page={'admin'} place={place} />}
         </BaseContainer>
     );
 };

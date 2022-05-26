@@ -158,15 +158,15 @@ const AdminRegister = () => {
             <Box>
                 <Grid container width={'100%'} direction="row">
                     <Grid item xs={12}>
-                        <StackBox w="70%">
+                        <StackBox w={{ md: '70%', xs: '90%' }}>
                             <Box sx={{ marginBottom: '30px' }}>
-                                <Typography variant="h1" fontWeight={'bold'}>
+                                <Typography variant={{ md: 'h1', xs: 'h2' }} fontWeight={'bold'}>
                                     Admin Registartion
                                 </Typography>
                             </Box>
                             <div>
                                 <Stack spacing={3}>
-                                    <Stack direction={'row'} spacing={3}>
+                                    <Stack direction={{ md: 'row', xs: 'column' }} spacing={3}>
                                         <FormControl fullWidth variant="filled">
                                             <InputLabel htmlFor="outlined-adornment-firstName">First Name</InputLabel>
                                             <FilledInput
@@ -196,7 +196,7 @@ const AdminRegister = () => {
                                             />
                                         </FormControl>
                                     </Stack>
-                                    <Stack direction="row" spacing={3}>
+                                    <Stack direction={{ md: 'row', xs: 'column' }} spacing={3}>
                                         <FormControl fullWidth variant="filled">
                                             <InputLabel htmlFor="outlined-adornment-email">Email</InputLabel>
                                             <FilledInput
@@ -228,7 +228,7 @@ const AdminRegister = () => {
                                             />
                                         </FormControl>
                                     </Stack>
-                                    <Stack direction={'row'} spacing={3}>
+                                    <Stack direction={{ md: 'row', xs: 'column' }} spacing={3}>
                                         <FormControl fullWidth variant="filled">
                                             <InputLabel htmlFor="outlined-adornment-age">Age</InputLabel>
                                             <FilledInput
@@ -258,7 +258,7 @@ const AdminRegister = () => {
                                             </Select>
                                         </FormControl>
                                     </Stack>
-                                    <Stack direction="row" spacing={3}>
+                                    <Stack direction={{ md: 'row', xs: 'column' }} spacing={3}>
                                         <FormControl fullWidth variant="filled">
                                             <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
                                             <FilledInput
@@ -292,7 +292,12 @@ const AdminRegister = () => {
                                             />
                                         </FormControl>
                                     </Stack>
-                                    <Stack direction={'row'} alignItems={'center'} justifyContent={'space-between'}>
+                                    <Stack
+                                        direction={{ md: 'row', xs: 'column' }}
+                                        alignItems={'flex-start'}
+                                        justifyContent={'space-between'}
+                                        spacing={{ xs: 3 }}
+                                    >
                                         <Box>
                                             {form.latitude === '' && form.longitude === '' ? (
                                                 <Button variant="outlined" onClick={handleGeoLocationPermission}>
@@ -315,7 +320,12 @@ const AdminRegister = () => {
                                                 />
                                             )}
                                             {file === null && form.dplink === '' && (
-                                                <Button variant="outlined" component="label" color="info">
+                                                <Button
+                                                    fullWidth={{ xs: true }}
+                                                    variant="outlined"
+                                                    component="label"
+                                                    color="info"
+                                                >
                                                     Upload your profile picture
                                                     <input
                                                         type="file"
@@ -331,15 +341,23 @@ const AdminRegister = () => {
                                             )}
                                         </Box>
                                     </Stack>
-                                    <Stack direction={'row'} alignItems="center" justifyContent={'space-between'}>
-                                        <Stack direction={'row'} spacing={2}>
+                                    <Stack
+                                        direction={{ md: 'row', xs: 'column-reverse' }}
+                                        alignItems="center"
+                                        justifyContent={'space-between'}
+                                    >
+                                        <Stack direction={{ md: 'row', xs: 'column' }} spacing={2}>
                                             <LinkTo to="/admin/signin">
-                                                <Button size="small" sx={{ color: 'gray' }}>
+                                                <Button
+                                                    fullWidth={{ xs: true }}
+                                                    size="small"
+                                                    sx={{ color: 'gray', marginTop: { xs: '10px' } }}
+                                                >
                                                     Admin Log In
                                                 </Button>
                                             </LinkTo>
                                             {/* TODO: create a section where admin can check their status*/}
-                                            <Button size="small" sx={{ color: 'gray' }}>
+                                            <Button size="small" sx={{ color: 'gray', marginBottom: { xs: '20px' } }}>
                                                 Check admin registration status
                                             </Button>
                                         </Stack>

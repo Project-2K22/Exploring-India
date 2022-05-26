@@ -89,6 +89,7 @@ const AdminAllAdminList = () => {
     const [value, setValue] = useState(0);
     const [allAdmins, setAllAdmins] = useState({});
     const { uid, user, error, loading } = useAuthState();
+    const [adminLoading, setAdminLoading] = useState(true);
 
     const navigate = useNavigate();
 
@@ -100,7 +101,9 @@ const AdminAllAdminList = () => {
         const adminsRef = ref(db, 'admins/');
         onValue(adminsRef, snapshot => {
             const data = snapshot.val();
+            console.log(data);
             setAllAdmins(data);
+            setAdminLoading(false);
         });
     }, []);
 
@@ -116,7 +119,7 @@ const AdminAllAdminList = () => {
 
     return (
         <BaseContainer w="lg">
-            {loading ? (
+            {loading || adminLoading ? (
                 <Loader />
             ) : (
                 <>

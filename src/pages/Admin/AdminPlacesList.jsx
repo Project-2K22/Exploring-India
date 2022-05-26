@@ -51,9 +51,13 @@ const PlaceCard = ({ name, city, state, id }) => {
         //     <Grid></Grid>
         // </Grid>
         <Paper variant="outlined" sx={{ padding: '10px' }}>
-            <Stack direction={'row'} alignItems="center" justifyContent={'space-between'}>
+            <Stack
+                direction={{ md: 'row', xs: 'column' }}
+                alignItems={{ md: 'center', xs: 'flex-start' }}
+                justifyContent={'space-between'}
+            >
                 <Stack>
-                    <Typography fontWeight={'bold'} fontSize="2rem">
+                    <Typography fontWeight={'bold'} fontSize="2em">
                         {name}
                     </Typography>
                     <Typography color={'gray'}>{`${city}, ${state}`}</Typography>
@@ -70,7 +74,8 @@ const PlaceCard = ({ name, city, state, id }) => {
 const AdminPlacesList = () => {
     const [value, setValue] = useState(0);
     const { uid, user, error, loading } = useAuthState();
-    const [allPlaces, setAllPlaces] = useState([]);
+    const [allPlaces, setAllPlaces] = useState({});
+    const [placeLoading, setPlaceLoading] = useState(true);
 
     const navigate = useNavigate();
 
@@ -78,8 +83,8 @@ const AdminPlacesList = () => {
         const placesRef = ref(db, 'places/');
         onValue(placesRef, snapshot => {
             const data = snapshot.val();
-            console.log(data);
             setAllPlaces(data);
+            setPlaceLoading(false);
         });
     }, []);
 
@@ -87,8 +92,10 @@ const AdminPlacesList = () => {
         if (localStorage.getItem('admin_sign_in_status') === null) navigate('/admin/signin');
     }, []);
 
-    const count = type => {
-        return allPlaces.filter(p => p.placeVerified === type).length;
+    const count = (type, _type) => {
+        return Object.keys(allPlaces).filter(
+            p => allPlaces[p].placeVerified === type || allPlaces[p].placeVerified === _type
+        ).length;
     };
 
     const handleChange = (event, newValue) => {
@@ -97,12 +104,12 @@ const AdminPlacesList = () => {
 
     return (
         <BaseContainer w="lg">
-            {loading ? (
+            {loading || placeLoading ? (
                 <Loader />
             ) : (
                 <>
                     <AdminNavbar heading={'Places'} user={user} />
-                    <Box sx={{ width: '100%' }} p={4}>
+                    <Box sx={{ width: '100%' }} p={{ md: 4, xs: 0 }}>
                         <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
                             <Tabs
                                 textColor={colorArray[value]}
@@ -111,40 +118,77 @@ const AdminPlacesList = () => {
                                 onChange={handleChange}
                                 aria-label="basic tabs example"
                             >
-                                <Tab sx={{ color: 'blue' }} label={`Queue (${count(false)})`} {...a11yProps(0)} />
-                                <Tab sx={{ color: 'green' }} label={`Granted (${count(true)})`} {...a11yProps(1)} />
-                                <Tab sx={{ color: 'red' }} label={`Rejected (${count('rej')})`} {...a11yProps(2)} />
+                                <Tab
+                                    sx={{ color: 'blue' }}
+                                    label={`Queue (${count(false, 'false')})`}
+                                    {...a11yProps(0)}
+                                />
+                                <Tab
+                                    sx={{ color: 'green' }}
+                                    label={`Granted (${count(true, 'true')})`}
+                                    {...a11yProps(1)}
+                                />
+                                <Tab
+                                    sx={{ color: 'red' }}
+                                    label={`Rejected (${count('rej', 'rej')})`}
+                                    {...a11yProps(2)}
+                                />
                             </Tabs>
                         </Box>
                         <TabPanel value={value} index={0}>
                             <Grid width={'100%'} container spacing={4}>
-                                {allPlaces
-                                    .filter(p => p.placeVerified === 'false')
+                                {Object.keys(allPlaces)
+                                    .filter(
+                                        p =>
+                                            allPlaces[p].placeVerified === false ||
+                                            allPlaces[p].placeVerified === 'false'
+                                    )
                                     .map((p, id) => (
-                                        <Grid item xs={6}>
-                                            <PlaceCard name={p.name} city={p.city} state={p.state} id={id} key={id} />
+                                        <Grid item xs={12} md={6}>
+                                            <PlaceCard
+                                                name={allPlaces[p].name}
+                                                city={allPlaces[p].city}
+                                                state={allPlaces[p].state}
+                                                id={p}
+                                                key={id}
+                                            />
                                         </Grid>
                                     ))}
                             </Grid>
                         </TabPanel>
                         <TabPanel value={value} index={1}>
                             <Grid width={'100%'} container spacing={4}>
-                                {allPlaces
-                                    .filter(p => p.placeVerified === 'true')
+                                {Object.keys(allPlaces)
+                                    .filter(
+                                        p =>
+                                            allPlaces[p].placeVerified === true || allPlaces[p].placeVerified === 'true'
+                                    )
                                     .map((p, id) => (
-                                        <Grid item xs={6}>
-                                            <PlaceCard name={p.name} city={p.city} state={p.state} id={id} key={id} />
+                                        <Grid item xs={12} md={6}>
+                                            <PlaceCard
+                                                name={allPlaces[p].name}
+                                                city={allPlaces[p].city}
+                                                state={allPlaces[p].state}
+                                                id={p}
+                                                key={id}
+                                            />
                                         </Grid>
                                     ))}
                             </Grid>
                         </TabPanel>
                         <TabPanel value={value} index={2}>
                             <Grid width={'100%'} container spacing={4}>
-                                {allPlaces
-                                    .filter(p => p.placeVerified === 'rej')
+                                {Object.keys(allPlaces)
+                                    .filter(p => allPlaces[p].placeVerified === 'rej')
                                     .map((p, id) => (
-                                        <Grid item xs={6}>
-                                            <PlaceCard name={p.name} city={p.city} state={p.state} id={id} key={id} />
+                                        <Grid item xs={12} md={6}>
+                                            <PlaceCard
+                                                name={allPlaces[p].name}
+                                                city={allPlaces[p].city}
+                                                state={allPlaces[p].state}
+                                                id={p}
+                                                key={id}
+                                            />
                                         </Grid>
                                     ))}
                             </Grid>

@@ -54,7 +54,7 @@ const AdminNavbar = ({ heading, user }) => {
 
             <Drawer open={drawerOpen} onClose={closeDrawer}>
                 <Stack
-                    width={'30vw'}
+                    width={{ md: '30vw', xs: '70vw' }}
                     height="100%"
                     sx={{ paddingX: '50px', paddingY: '30px' }}
                     justifyContent="space-between"
@@ -146,7 +146,7 @@ const AdminNavbar = ({ heading, user }) => {
                             </Accordion>
                         </Stack>
                     </Box>
-                    <Stack direction={'row'} spacing={3}>
+                    <Stack direction={{ md: 'row', xs: 'column' }} spacing={3}>
                         <Button fullWidth variant="contained" color="warning" onClick={handleSignOut}>
                             Log Out
                         </Button>

@@ -97,6 +97,7 @@ const Signup = () => {
                     age: -1,
                     phoneno: -1,
                     gender: -1,
+                    placeVisited: [],
                     dplink: `https://avatars.dicebear.com/api/avataaars/${form.name}.svg`,
                 });
             })
@@ -111,107 +112,113 @@ const Signup = () => {
         <React.Fragment>
             <CssBaseline />
             <SnackBarBox alert={alert} setAlert={setAlert} />
-            <Box>
+            <Box
+                sx={{
+                    background:
+                        'url(https://firebasestorage.googleapis.com/v0/b/exploring-india.appspot.com/o/auth_images%2Fsignup%2Fpexels-krivec-ales-580151.jpg?alt=media&token=7db1be3a-843b-4ce2-8e09-4a61e3b2e46c)',
+                    backgroundSize: 'cover',
+                    objectFit: 'center',
+                }}
+            >
                 <Grid container width={'100%'} direction="row">
-                    <Grid item xs={6}>
-                        <StackBox w="70%">
-                            <Box sx={{ marginBottom: '30px' }}>
-                                <Typography variant="h1" fontWeight={'bold'}>
-                                    Sign Up
-                                </Typography>
-                            </Box>
-                            <div>
-                                <Stack spacing={3}>
-                                    <FormControl fullWidth variant="filled">
-                                        <InputLabel htmlFor="outlined-adornment-name">Name</InputLabel>
-                                        <FilledInput
-                                            id="outlined-adornment-name"
-                                            value={form.name}
-                                            onChange={e =>
-                                                setForm({
-                                                    ...form,
-                                                    name: e.target.value,
-                                                })
-                                            }
-                                            endAdornment={<PersonIcon />}
-                                        />
-                                    </FormControl>
-                                    <FormControl fullWidth variant="filled">
-                                        <InputLabel htmlFor="outlined-adornment-email">Email</InputLabel>
-                                        <FilledInput
-                                            type="email"
-                                            id="outlined-adornment-email"
-                                            value={form.email}
-                                            onChange={e =>
-                                                setForm({
-                                                    ...form,
-                                                    email: e.target.value,
-                                                })
-                                            }
-                                            endAdornment={<EmailIcon />}
-                                        />
-                                    </FormControl>
-                                    <FormControl fullWidth variant="filled">
-                                        <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
-                                        <FilledInput
-                                            id="outlined-adornment-password"
-                                            type="password"
-                                            value={form.password}
-                                            onChange={e =>
-                                                setForm({
-                                                    ...form,
-                                                    password: e.target.value,
-                                                })
-                                            }
-                                            endAdornment={<KeyIcon />}
-                                        />
-                                    </FormControl>
-                                    <FormControl fullWidth variant="filled">
-                                        <InputLabel htmlFor="outlined-adornment-confirm-password">
-                                            Confirm Password
-                                        </InputLabel>
-                                        <FilledInput
-                                            id="outlined-adornment-confirm-password"
-                                            type="password"
-                                            value={form.confirmPassword}
-                                            onChange={e =>
-                                                setForm({
-                                                    ...form,
-                                                    confirmPassword: e.target.value,
-                                                })
-                                            }
-                                            endAdornment={<KeyIcon />}
-                                        />
-                                    </FormControl>
-                                    <Stack direction={'row'} alignItems="center" justifyContent={'space-between'}>
-                                        <Stack direction={'row'} spacing={2}>
-                                            <LinkTo to="/login">
-                                                <Button size="small" sx={{ color: 'gray' }}>
-                                                    Log In
-                                                </Button>
-                                            </LinkTo>
-                                        </Stack>
-                                        <LoadingButton onClick={handleFormSubmit} variant="contained" loading={loading}>
-                                            Sign Up
-                                        </LoadingButton>
-                                    </Stack>
-                                </Stack>
-                            </div>
-                        </StackBox>
-                    </Grid>
-                    <Grid item xs={6}>
-                        <StackBox w="80%">
-                            <Stack justifyContent="space-around">
-                                <Box>
-                                    <Typography>Start planning your</Typography>
-                                    <Typography variant="h1" fontWeight="bold">
-                                        Journey
+                    <Grid item md={12} xs={12}>
+                        <StackBox w={{ md: '80%', xs: '95%' }}>
+                            <Box
+                                sx={{
+                                    padding: '20px',
+                                    background: 'rgba( 255, 255, 255, 0.2 )',
+                                    backdropFilter: 'blur( 20px )',
+                                    WebkitBackdropFilter: 'blur( 20px )',
+                                    border: '1px solid rgba( 255, 255, 255, 0.18 )',
+                                }}
+                            >
+                                <Box sx={{ marginBottom: '30px' }}>
+                                    <Typography variant={{ md: 'h1', xs: 'h2' }} fontWeight={'bold'}>
+                                        Sign Up
                                     </Typography>
                                 </Box>
-                                <Typography>
-                                    “A journey of a thousand miles begins with a single step” – Lao Tzu
-                                </Typography>
-                            </Stack>
+                                <div>
+                                    <Stack spacing={3}>
+                                        <FormControl fullWidth variant="filled">
+                                            <InputLabel htmlFor="outlined-adornment-name">Name</InputLabel>
+                                            <FilledInput
+                                                id="outlined-adornment-name"
+                                                value={form.name}
+                                                onChange={e =>
+                                                    setForm({
+                                                        ...form,
+                                                        name: e.target.value,
+                                                    })
+                                                }
+                                                endAdornment={<PersonIcon />}
+                                            />
+                                        </FormControl>
+                                        <FormControl fullWidth variant="filled">
+                                            <InputLabel htmlFor="outlined-adornment-email">Email</InputLabel>
+                                            <FilledInput
+                                                type="email"
+                                                id="outlined-adornment-email"
+                                                value={form.email}
+                                                onChange={e =>
+                                                    setForm({
+                                                        ...form,
+                                                        email: e.target.value,
+                                                    })
+                                                }
+                                                endAdornment={<EmailIcon />}
+                                            />
+                                        </FormControl>
+                                        <FormControl fullWidth variant="filled">
+                                            <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
+                                            <FilledInput
+                                                id="outlined-adornment-password"
+                                                type="password"
+                                                value={form.password}
+                                                onChange={e =>
+                                                    setForm({
+                                                        ...form,
+                                                        password: e.target.value,
+                                                    })
+                                                }
+                                                endAdornment={<KeyIcon />}
+                                            />
+                                        </FormControl>
+                                        <FormControl fullWidth variant="filled">
+                                            <InputLabel htmlFor="outlined-adornment-confirm-password">
+                                                Confirm Password
+                                            </InputLabel>
+                                            <FilledInput
+                                                id="outlined-adornment-confirm-password"
+                                                type="password"
+                                                value={form.confirmPassword}
+                                                onChange={e =>
+                                                    setForm({
+                                                        ...form,
+                                                        confirmPassword: e.target.value,
+                                                    })
+                                                }
+                                                endAdornment={<KeyIcon />}
+                                            />
+                                        </FormControl>
+                                        <Stack direction={'row'} alignItems="center" justifyContent={'space-between'}>
+                                            <Stack direction={'row'} spacing={2}>
+                                                <LinkTo to="/login">
+                                                    <Button size="small" sx={{ color: 'black' }}>
+                                                        Log In
+                                                    </Button>
+                                                </LinkTo>
+                                            </Stack>
+                                            <LoadingButton
+                                                onClick={handleFormSubmit}
+                                                variant="contained"
+                                                loading={loading}
+                                            >
+                                                Sign Up
+                                            </LoadingButton>
+                                        </Stack>
+                                    </Stack>
+                                </div>
+                            </Box>
                         </StackBox>
                     </Grid>
                 </Grid>
