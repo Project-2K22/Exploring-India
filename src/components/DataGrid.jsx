@@ -24,17 +24,25 @@ const DataGrid = ({ user, id, page, methods, state }) => {
         <Accordion variant="outlined" key={id}>
             <AccordionSummary
                 expandIcon={
-                    <Button>
+                    <Button size={'smaill'}>
                         <OpenInFullRoundedIcon />
                     </Button>
                 }
                 aria-controls="panel1a-content"
                 id="panel1a-header"
             >
-                <Stack direction={'row'} alignItems="center" spacing={5}>
+                <Stack
+                    direction={{ md: 'row', xs: 'column' }}
+                    alignItems={{ md: 'center', xs: 'flex-start' }}
+                    spacing={5}
+                >
                     <Stack direction={'row'} alignItems="center" spacing={3}>
                         <Avatar alt={user.name} src={user.dplink} sx={{ width: 56, height: 56 }} />
-                        <Typography fontWeight={'bold'} fontSize="20px" textTransform={'uppercase'}>
+                        <Typography
+                            fontWeight={'bold'}
+                            fontSize={{ md: '1.5vw', xs: '3vw' }}
+                            textTransform={'uppercase'}
+                        >
                             {user.name}
                         </Typography>
                     </Stack>
@@ -140,17 +148,22 @@ const DataGrid = ({ user, id, page, methods, state }) => {
                     </Stack>
                 )}
                 {page === 'admin' && state === 'queue' && (
-                    <Stack direction={'row'} justifyContent={'space-between'} spacing={3} mt={'20px'}>
+                    <Stack
+                        direction={{ md: 'row', xs: 'column' }}
+                        justifyContent={'space-between'}
+                        spacing={3}
+                        mt={'20px'}
+                    >
                         <Button variant="outlined" color="info">
                             Sent admin email verfication mail
                         </Button>
                         <Button variant="outlined" color="info">
                             Sent admin phone number verification sms
                         </Button>
-                        <Button onClick={methods.onGrant} variant="outlined" color="info">
+                        <Button onClick={methods.onGrant} variant="outlined" color="success">
                             Grant admin access
                         </Button>
-                        <Button onClick={methods.onReject} variant="outlined" color="info">
+                        <Button onClick={methods.onReject} variant="outlined" color="error">
                             Reject admin access
                         </Button>
                     </Stack>

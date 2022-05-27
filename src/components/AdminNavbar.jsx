@@ -47,7 +47,7 @@ const AdminNavbar = ({ heading, user }) => {
                     <Button onClick={openDrawer}>
                         <MenuOpenIcon />
                     </Button>
-                    <Typography variant="h2">{heading}</Typography>
+                    <Typography fontSize={{ md: '5vw', xs: '8vw' }}>{heading}</Typography>
                 </Stack>
             </Box>
             <Divider />
@@ -56,7 +56,7 @@ const AdminNavbar = ({ heading, user }) => {
                 <Stack
                     width={{ md: '30vw', xs: '70vw' }}
                     height="100%"
-                    sx={{ paddingX: '50px', paddingY: '30px' }}
+                    sx={{ paddingX: { md: '50px', xs: '10px' }, paddingY: '30px' }}
                     justifyContent="space-between"
                 >
                     <Box width={'100%'}>
@@ -74,18 +74,28 @@ const AdminNavbar = ({ heading, user }) => {
                                     <Paper variant="outlined" sx={{ width: '100%', padding: '10px' }}>
                                         <Stack width={'100%'} spacing={2}>
                                             <Stack direction={'row'} justifyContent={'space-between'}>
-                                                <Typography fontWeight={'bold'}>Name</Typography>
-                                                <Typography>{user.name}</Typography>
+                                                <Typography fontSize={{ md: '1vw', xs: '3vw' }} fontWeight={'bold'}>
+                                                    Name
+                                                </Typography>
+                                                <Typography fontSize={{ md: '1vw', xs: '3vw' }}>{user.name}</Typography>
                                             </Stack>
                                             <Divider />
                                             <Stack direction={'row'} justifyContent={'space-between'}>
-                                                <Typography fontWeight={'bold'}>Email</Typography>
-                                                <Typography>{user.email}</Typography>
+                                                <Typography fontSize={{ md: '1vw', xs: '3vw' }} fontWeight={'bold'}>
+                                                    Email
+                                                </Typography>
+                                                <Typography fontSize={{ md: '1vw', xs: '3vw' }}>
+                                                    {user.email}
+                                                </Typography>
                                             </Stack>
                                             <Divider />
                                             <Stack direction={'row'} justifyContent={'space-between'}>
-                                                <Typography fontWeight={'bold'}>Phone</Typography>
-                                                <Typography>{user.phoneno}</Typography>
+                                                <Typography fontSize={{ md: '1vw', xs: '3vw' }} fontWeight={'bold'}>
+                                                    Phone
+                                                </Typography>
+                                                <Typography fontSize={{ md: '1vw', xs: '3vw' }}>
+                                                    {user.phoneno}
+                                                </Typography>
                                             </Stack>
                                         </Stack>
                                     </Paper>

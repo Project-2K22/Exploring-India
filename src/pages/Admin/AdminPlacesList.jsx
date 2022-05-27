@@ -57,14 +57,20 @@ const PlaceCard = ({ name, city, state, id }) => {
                 justifyContent={'space-between'}
             >
                 <Stack>
-                    <Typography fontWeight={'bold'} fontSize="2em">
+                    <Typography fontWeight={'bold'} fontSize={{ md: '2em', xs: '1em' }}>
                         {name}
                     </Typography>
-                    <Typography color={'gray'}>{`${city}, ${state}`}</Typography>
+                    <Typography
+                        color={'gray'}
+                        fontStyle={'italic'}
+                        fontSize={{ md: '1em', xs: '0.8em' }}
+                    >{`${city}, ${state}`}</Typography>
                 </Stack>
                 <Divider />
                 <LinkTo to={`/admin/all/places/${id}`}>
-                    <Button onClick={() => console.log(id)}>View</Button>
+                    <Button size={'small'} onClick={() => console.log(id)}>
+                        View
+                    </Button>
                 </LinkTo>
             </Stack>
         </Paper>
@@ -119,17 +125,17 @@ const AdminPlacesList = () => {
                                 aria-label="basic tabs example"
                             >
                                 <Tab
-                                    sx={{ color: 'blue' }}
+                                    sx={{ color: 'blue', fontSize: { md: '1vw', xs: '2vw' } }}
                                     label={`Queue (${count(false, 'false')})`}
                                     {...a11yProps(0)}
                                 />
                                 <Tab
-                                    sx={{ color: 'green' }}
+                                    sx={{ color: 'green', fontSize: { md: '1vw', xs: '2vw' } }}
                                     label={`Granted (${count(true, 'true')})`}
                                     {...a11yProps(1)}
                                 />
                                 <Tab
-                                    sx={{ color: 'red' }}
+                                    sx={{ color: 'red', fontSize: { md: '1vw', xs: '2vw' } }}
                                     label={`Rejected (${count('rej', 'rej')})`}
                                     {...a11yProps(2)}
                                 />

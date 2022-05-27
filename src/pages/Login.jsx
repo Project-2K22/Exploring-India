@@ -136,7 +136,7 @@ const Login = () => {
                                             />
                                         </FormControl>
                                         <Stack direction={'row'} alignItems="center" justifyContent={'space-between'}>
-                                            <Stack direction={'row'} spacing={2}>
+                                            <Stack direction={{ md: 'row', xs: 'column' }} spacing={{ md: 2, xs: 0 }}>
                                                 <LinkTo to="/signup">
                                                     <Button size="small" sx={{ color: 'black' }}>
                                                         Sign Up

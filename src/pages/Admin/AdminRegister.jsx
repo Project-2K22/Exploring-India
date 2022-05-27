@@ -55,6 +55,10 @@ const AdminRegister = () => {
 
     const [loading, setLoading] = useState(false);
 
+    useEffect(() => {
+        localStorage.clear();
+    }, []);
+
     const resetForm = () => {
         setForm({
             firstName: '',
@@ -158,9 +162,9 @@ const AdminRegister = () => {
             <Box>
                 <Grid container width={'100%'} direction="row">
                     <Grid item xs={12}>
-                        <StackBox w={{ md: '70%', xs: '90%' }}>
+                        <StackBox w={{ md: '70%', xs: '100%' }}>
                             <Box sx={{ marginBottom: '30px' }}>
-                                <Typography variant={{ md: 'h1', xs: 'h2' }} fontWeight={'bold'}>
+                                <Typography fontSize={{ md: '3vw', xs: '5vw' }} fontWeight={'bold'}>
                                     Admin Registartion
                                 </Typography>
                             </Box>
@@ -346,18 +350,14 @@ const AdminRegister = () => {
                                         alignItems="center"
                                         justifyContent={'space-between'}
                                     >
-                                        <Stack direction={{ md: 'row', xs: 'column' }} spacing={2}>
+                                        <Stack direction={'row'} spacing={2}>
                                             <LinkTo to="/admin/signin">
-                                                <Button
-                                                    fullWidth={{ xs: true }}
-                                                    size="small"
-                                                    sx={{ color: 'gray', marginTop: { xs: '10px' } }}
-                                                >
+                                                <Button size="small" sx={{ color: 'gray' }}>
                                                     Admin Log In
                                                 </Button>
                                             </LinkTo>
                                             {/* TODO: create a section where admin can check their status*/}
-                                            <Button size="small" sx={{ color: 'gray', marginBottom: { xs: '20px' } }}>
+                                            <Button size="small" sx={{ color: 'gray' }}>
                                                 Check admin registration status
                                             </Button>
                                         </Stack>
@@ -366,6 +366,8 @@ const AdminRegister = () => {
                                             onClick={handleFormSubmit}
                                             variant="contained"
                                             loading={loading}
+                                            // fullWidth={{ md: false, xs: true }}
+                                            sx={{ width: { xs: '100%', md: 'inherit' } }}
                                         >
                                             Admin Sign Up
                                         </LoadingButton>

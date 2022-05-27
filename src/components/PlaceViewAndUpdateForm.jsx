@@ -327,6 +327,34 @@ const PlaceViewAndUpdateForm = ({ page, place, placeId }) => {
             );
     };
 
+    const onUpdatePlaceDetailsByAdmin = () => {
+        if (page === 'admin') {
+            if (prev === form) {
+                setAlert({
+                    visible: true,
+                    message: 'You have to add/update any data to submit',
+                    type: 'info',
+                });
+                return;
+            }
+        }
+        update(DBREF(db, 'places/' + placeId), form)
+            .then(() =>
+                setAlert({
+                    visible: true,
+                    message: 'Updated !',
+                    type: 'success',
+                })
+            )
+            .catch(err =>
+                setAlert({
+                    visible: true,
+                    message: err,
+                    type: 'error',
+                })
+            );
+    };
+
     return (
         <BaseContainer w="lg">
             <SnackBarBox alert={alert} setAlert={setAlert} />
@@ -375,7 +403,7 @@ const PlaceViewAndUpdateForm = ({ page, place, placeId }) => {
                         onChange={e => setForm({ ...form, type: e.target.value })}
                     >
                         <MenuItem value={'Mountain'}>Mountain</MenuItem>
-                        <MenuItem value={'Beach'}>Beach</MenuItem>
+                        <MenuItem value={'Sea'}>Beach</MenuItem>
                         <MenuItem value={'Desert'}>Desert</MenuItem>
                         <MenuItem value={'Heritage'}>Heritage</MenuItem>
                     </Select>
@@ -426,7 +454,7 @@ const PlaceViewAndUpdateForm = ({ page, place, placeId }) => {
                             return (
                                 <>
                                     {ig === '' && (
-                                        <Grid item xs={12} md={3}>
+                                        <Grid item xs={12} md={4}>
                                             <Button
                                                 component="label"
                                                 sx={{
@@ -449,7 +477,7 @@ const PlaceViewAndUpdateForm = ({ page, place, placeId }) => {
                                         </Grid>
                                     )}
                                     {ig !== '' && (
-                                        <Grid item md={3} xs={12}>
+                                        <Grid item md={4} xs={12}>
                                             <Paper
                                                 sx={{
                                                     width: '100%',
@@ -472,7 +500,7 @@ const PlaceViewAndUpdateForm = ({ page, place, placeId }) => {
                         })}
                     </Grid>
                 )}
-                {page === 'admin' && (form.placeVerified === 'false' || form.placeVerified === false) && (
+                {page === 'admin' && ['false', false, 'true', true].includes(form.placeVerified) && (
                     <Paper variant="outlined" sx={{ padding: '20px' }}>
                         <Typography>For Admin Only</Typography>
                         <Stack spacing={3}>
@@ -486,7 +514,7 @@ const PlaceViewAndUpdateForm = ({ page, place, placeId }) => {
                                 value={form.id}
                                 onChange={e => setForm({ ...form, id: e.target.value })}
                             />
-                            <Button onClick={addAdminUpdateData} fullWidth variant="contained" color="success">
+                            <Button onClick={addAdminUpdateData} variant="contained" color="success">
                                 Update
                             </Button>
                         </Stack>
@@ -500,6 +528,11 @@ const PlaceViewAndUpdateForm = ({ page, place, placeId }) => {
                 {page === 'admin' && form.placeVerified === 'rej' && (
                     <Button onClick={onDeletePlaceFromDatabase} fullWidth variant="contained" color="error">
                         Delete place from database
+                    </Button>
+                )}
+                {page === 'admin' && (form.placeVerified === 'true' || form.placeVerified === true) && (
+                    <Button onClick={onUpdatePlaceDetailsByAdmin} fullWidth variant="contained" color="error">
+                        upate place details (by admin)
                     </Button>
                 )}
                 {page === 'admin' && (form.placeVerified === 'false' || form.placeVerified === false) && (

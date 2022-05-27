@@ -63,7 +63,7 @@ const deleteAdminAccount = uid => {
 
 const AdminCard = ({ allAdmins, type, uid, state }) => {
     return (
-        <Stack p={'20px'} direction={'column'} spacing={2}>
+        <Stack width={'100%'} p={'20px'} direction={'column'} spacing={2}>
             {Object.keys(allAdmins)
                 .filter(k => allAdmins[k].granted === type)
                 .filter(k => k !== uid)
@@ -124,7 +124,7 @@ const AdminAllAdminList = () => {
             ) : (
                 <>
                     <AdminNavbar heading={'Admins'} user={user} />
-                    <Box sx={{ width: '100%' }} p={4}>
+                    <Box sx={{ width: '100%' }} p={{ md: 4, xs: 0 }}>
                         <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
                             <Tabs
                                 textColor={colorArray[value]}
@@ -133,9 +133,21 @@ const AdminAllAdminList = () => {
                                 onChange={handleChange}
                                 aria-label="basic tabs example"
                             >
-                                <Tab sx={{ color: 'blue' }} label={`Queue (${count('false')})`} {...a11yProps(0)} />
-                                <Tab sx={{ color: 'green' }} label={`Granted (${count('true')})`} {...a11yProps(1)} />
-                                <Tab sx={{ color: 'red' }} label={`Rejected (${count('rej')})`} {...a11yProps(2)} />
+                                <Tab
+                                    sx={{ color: 'blue', fontSize: { md: '1vw', xs: '2vw' } }}
+                                    label={`Queue (${count('false')})`}
+                                    {...a11yProps(0)}
+                                />
+                                <Tab
+                                    sx={{ color: 'green', fontSize: { md: '1vw', xs: '2vw' } }}
+                                    label={`Granted (${count('true')})`}
+                                    {...a11yProps(1)}
+                                />
+                                <Tab
+                                    sx={{ color: 'red', fontSize: { md: '1vw', xs: '2vw' } }}
+                                    label={`Rejected (${count('rej')})`}
+                                    {...a11yProps(2)}
+                                />
                             </Tabs>
                         </Box>
                         <TabPanel value={value} index={0}>

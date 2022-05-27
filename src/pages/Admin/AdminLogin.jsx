@@ -31,6 +31,10 @@ const AdminLogin = () => {
 
     const navigate = useNavigate();
 
+    // useEffect(() => {
+    //     localStorage.clear();
+    // }, []);
+
     const resetForm = () => {
         setForm({ email: '', password: '' });
     };
@@ -41,7 +45,8 @@ const AdminLogin = () => {
             .then(snapshot => {
                 if (snapshot.exists()) {
                     const data = snapshot.val();
-                    if (data.granted === 'true') {
+                    console.log(data);
+                    if (data.granted === 'true' && data.email === form.email) {
                         navigate('/admin/dashboard');
                         localStorage.setItem('admin_sign_in_status', true);
                     } else if (data.granted === 'false') {
@@ -101,9 +106,9 @@ const AdminLogin = () => {
             <Box>
                 <Grid container width={'100%'}>
                     <Grid item xs={12}>
-                        <StackBox w={{ md: '70%', xs: '90%' }}>
+                        <StackBox w={{ md: '70%', xs: '100%' }}>
                             <Box sx={{ marginBottom: '30px' }}>
-                                <Typography variant={{ md: 'h1', xs: 'h2' }} fontWeight={'bold'}>
+                                <Typography fontSize={{ md: '3vw', xs: '5vw' }} fontWeight={'bold'}>
                                     Admin Sign In
                                 </Typography>
                             </Box>
