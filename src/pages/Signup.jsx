@@ -133,7 +133,7 @@ const Signup = () => {
                                 }}
                             >
                                 <Box sx={{ marginBottom: '30px' }}>
-                                    <Typography variant={{ md: 'h1', xs: 'h2' }} fontWeight={'bold'}>
+                                    <Typography fontSize={{ md: '3vw', xs: '5vw' }} fontWeight={'bold'}>
                                         Sign Up
                                     </Typography>
                                 </Box>

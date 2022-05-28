@@ -40,7 +40,7 @@ const Routes = () => {
                     <Route path="stackholder" element={<Stackholder />} />
 
                     <Route path="admin/*" element={<Navigate to="/admin/signin" replace />} />
-                    <Route path="*" element={<Navigate to="/login" replace />} />
+                    <Route path="/" element={<Navigate to="/login" replace />} />
                 </RS>
             </Router>
         </div>

@@ -1,5 +1,19 @@
 import React, { useState, useEffect } from 'react';
-import { FormControl, Box, Typography, Button, Stack, FilledInput, InputLabel, CssBaseline, Grid } from '@mui/material';
+import {
+    FormControl,
+    Box,
+    Typography,
+    Button,
+    Stack,
+    FilledInput,
+    InputLabel,
+    CssBaseline,
+    Grid,
+    useMediaQuery,
+    useTheme,
+    Menu,
+    MenuItem,
+} from '@mui/material';
 import { LoadingButton } from '@mui/lab';
 import EmailIcon from '@mui/icons-material/Email';
 import KeyIcon from '@mui/icons-material/Key';
@@ -37,9 +51,25 @@ const Login = () => {
         type: '',
     });
 
+    const [anchorEl, setAnchorEl] = useState(null);
+    const open = Boolean(anchorEl);
+    const handleClick = event => {
+        setAnchorEl(event.currentTarget);
+    };
+    const handleClose = () => {
+        setAnchorEl(null);
+    };
+
     const [loading, setLoading] = useState(false);
 
     const navigate = useNavigate();
+
+    const theme = useTheme();
+    const matches = useMediaQuery(theme.breakpoints.up('md'));
+
+    useEffect(() => {
+        console.log(matches);
+    }, [matches]);
 
     const resetForm = () => {
         setForm({ email: '', password: '' });
@@ -100,7 +130,7 @@ const Login = () => {
                                 }}
                             >
                                 <Box sx={{ marginBottom: '30px' }}>
-                                    <Typography variant={{ md: 'h1', xs: 'h2' }} fontWeight={'bold'}>
+                                    <Typography fontSize={{ md: '3vw', xs: '5vw' }} fontWeight={'bold'}>
                                         Sign In
                                     </Typography>
                                 </Box>
@@ -136,18 +166,74 @@ const Login = () => {
                                             />
                                         </FormControl>
                                         <Stack direction={'row'} alignItems="center" justifyContent={'space-between'}>
-                                            <Stack direction={{ md: 'row', xs: 'column' }} spacing={{ md: 2, xs: 0 }}>
-                                                <LinkTo to="/signup">
-                                                    <Button size="small" sx={{ color: 'black' }}>
-                                                        Sign Up
+                                            {matches && (
+                                                <Stack
+                                                    direction={{ md: 'row', xs: 'column' }}
+                                                    spacing={{ md: 2, xs: 0 }}
+                                                >
+                                                    <LinkTo to="/signup">
+                                                        <Button size="small" sx={{ color: 'black' }}>
+                                                            Sign Up
+                                                        </Button>
+                                                    </LinkTo>
+                                                    <LinkTo to="/forgot-password">
+                                                        <Button size="small" sx={{ color: 'black' }}>
+                                                            Forgot Password
+                                                        </Button>
+                                                    </LinkTo>
+                                                    <LinkTo to="/stackholder">
+                                                        <Button size="small" sx={{ color: 'black' }}>
+                                                            Upload Place details as stackholder
+                                                        </Button>
+                                                    </LinkTo>
+                                                </Stack>
+                                            )}
+                                            {!matches && (
+                                                <>
+                                                    <Button
+                                                        id="basic-button"
+                                                        aria-controls={open ? 'basic-menu' : undefined}
+                                                        aria-haspopup="true"
+                                                        aria-expanded={open ? 'true' : undefined}
+                                                        onClick={handleClick}
+                                                        size="small"
+                                                        sx={{ color: 'black' }}
+                                                    >
+                                                        Options
                                                     </Button>
-                                                </LinkTo>
-                                                <LinkTo to="/forgot-password">
-                                                    <Button size="small" sx={{ color: 'black' }}>
-                                                        Forgot Password
-                                                    </Button>
-                                                </LinkTo>
-                                            </Stack>
+                                                    <Menu
+                                                        id="basic-menu"
+                                                        anchorEl={anchorEl}
+                                                        open={open}
+                                                        onClose={handleClose}
+                                                        MenuListProps={{
+                                                            'aria-labelledby': 'basic-button',
+                                                        }}
+                                                    >
+                                                        <MenuItem onClick={handleClose}>
+                                                            <LinkTo to="/signup">
+                                                                <Button size="small" sx={{ color: 'black' }}>
+                                                                    Sign Up
+                                                                </Button>
+                                                            </LinkTo>
+                                                        </MenuItem>
+                                                        <MenuItem onClick={handleClose}>
+                                                            <LinkTo to="/forgot-password">
+                                                                <Button size="small" sx={{ color: 'black' }}>
+                                                                    Forgot Password
+                                                                </Button>
+                                                            </LinkTo>
+                                                        </MenuItem>
+                                                        <MenuItem onClick={handleClose}>
+                                                            <LinkTo to="/stackholder">
+                                                                <Button size="small" sx={{ color: 'black' }}>
+                                                                    Upload Place details as stackholder
+                                                                </Button>
+                                                            </LinkTo>
+                                                        </MenuItem>
+                                                    </Menu>
+                                                </>
+                                            )}
                                             <LoadingButton
                                                 onClick={handleFormSubmit}
                                                 variant="contained"
@@ -168,7 +254,6 @@ const Login = () => {
                             </Box>
                         </StackBox>
                     </Grid>
-                    {/* <Divider orientation="vertical" variant="middle" flexItem /> */}
                 </Grid>
             </Box>
         </>

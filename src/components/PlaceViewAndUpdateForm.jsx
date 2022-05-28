@@ -451,51 +451,42 @@ const PlaceViewAndUpdateForm = ({ page, place, placeId }) => {
                 {!uploadLoading && (
                     <Grid container width={'100%'} spacing={4}>
                         {form.imagelinks.map((ig, k) => {
-                            return (
-                                <>
-                                    {ig === '' && (
-                                        <Grid item xs={12} md={4}>
-                                            <Button
-                                                component="label"
-                                                sx={{
-                                                    width: '100%',
-                                                    height: '200px',
-                                                    border: '1px dashed blue ',
-                                                    textAlign: 'center',
-                                                }}
-                                            >
-                                                <Stack>
-                                                    <Typography>+</Typography>
-                                                    <Typography>click here to add picture</Typography>
-                                                </Stack>
-                                                <input
-                                                    hidden
-                                                    type="file"
-                                                    onChange={e => uploadImage(e.target.files[0], k)}
-                                                />
-                                            </Button>
-                                        </Grid>
-                                    )}
-                                    {ig !== '' && (
-                                        <Grid item md={4} xs={12}>
-                                            <Paper
-                                                sx={{
-                                                    width: '100%',
-                                                    height: '200px',
-                                                    border: '1px dashed blue ',
-                                                    textAlign: 'center',
-                                                }}
-                                            >
-                                                <img
-                                                    onClick={() => deleteImage(k)}
-                                                    style={{ height: '100%', width: '100%' }}
-                                                    src={ig}
-                                                    alt=""
-                                                />
-                                            </Paper>
-                                        </Grid>
-                                    )}
-                                </>
+                            return ig === '' ? (
+                                <Grid item xs={12} md={4}>
+                                    <Button
+                                        component="label"
+                                        sx={{
+                                            width: '100%',
+                                            height: '200px',
+                                            border: '1px dashed blue ',
+                                            textAlign: 'center',
+                                        }}
+                                    >
+                                        <Stack>
+                                            <Typography>+</Typography>
+                                            <Typography>click here to add picture</Typography>
+                                        </Stack>
+                                        <input hidden type="file" onChange={e => uploadImage(e.target.files[0], k)} />
+                                    </Button>
+                                </Grid>
+                            ) : (
+                                <Grid item md={4} xs={12}>
+                                    <Paper
+                                        sx={{
+                                            width: '100%',
+                                            height: '200px',
+                                            border: '1px dashed blue ',
+                                            textAlign: 'center',
+                                        }}
+                                    >
+                                        <img
+                                            onClick={() => deleteImage(k)}
+                                            style={{ height: '100%', width: '100%' }}
+                                            src={ig}
+                                            alt=""
+                                        />
+                                    </Paper>
+                                </Grid>
                             );
                         })}
                     </Grid>
