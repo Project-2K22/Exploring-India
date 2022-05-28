@@ -157,7 +157,7 @@ const UserPreference = () => {
                                 {activeStep < 4 ? (
                                     options[activeStep].map((option, key) => {
                                         return (
-                                            <Grid Item xs={4}>
+                                            <Grid Item xs={12} md={4}>
                                                 <ImageButtonContainer
                                                     image={{
                                                         title: option,

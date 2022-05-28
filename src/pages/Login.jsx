@@ -8,7 +8,11 @@ import {
     FilledInput,
     InputLabel,
     CssBaseline,
-    Divider,
+    Grid,
+    useMediaQuery,
+    useTheme,
+    Menu,
+    MenuItem,
 } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
 import EmailIcon from '@mui/icons-material/Email';
@@ -47,9 +51,25 @@ const Login = () => {
         type: '',
     });
 
+    const [anchorEl, setAnchorEl] = useState(null);
+    const open = Boolean(anchorEl);
+    const handleClick = event => {
+        setAnchorEl(event.currentTarget);
+    };
+    const handleClose = () => {
+        setAnchorEl(null);
+    };
+
     const [loading, setLoading] = useState(false);
 
     const navigate = useNavigate();
+
+    const theme = useTheme();
+    const matches = useMediaQuery(theme.breakpoints.up('md'));
+
+    useEffect(() => {
+        console.log(matches);
+    }, [matches]);
 
     const resetForm = () => {
         setForm({ email: '', password: '' });
@@ -89,81 +109,153 @@ const Login = () => {
         <>
             <CssBaseline />
             <SnackBarBox alert={alert} setAlert={setAlert} />
-            <Stack direction="row" alignItems="center" justifyContent="space-between">
-                <Box sx={{ width: '50%' }}>
-                    <StackBox w="70%">
-                        <Box sx={{ marginBottom: '30px' }}>
-                            <Typography variant="h1" fontWeight={'bold'}>
-                                Sign In
-                            </Typography>
-                        </Box>
-                        <div>
-                            <Stack spacing={3}>
-                                <FormControl fullWidth variant="filled">
-                                    <InputLabel htmlFor="outlined-adornment-email">Email</InputLabel>
-                                    <FilledInput
-                                        id="outlined-adornment-email"
-                                        value={form.email}
-                                        onChange={e =>
-                                            setForm({
-                                                ...form,
-                                                email: e.target.value,
-                                            })
-                                        }
-                                        endAdornment={<EmailIcon />}
-                                    />
-                                </FormControl>
-                                <FormControl fullWidth variant="filled">
-                                    <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
-                                    <FilledInput
-                                        id="outlined-adornment-password"
-                                        type="password"
-                                        value={form.password}
-                                        onChange={e =>
-                                            setForm({
-                                                ...form,
-                                                password: e.target.value,
-                                            })
-                                        }
-                                        endAdornment={<KeyIcon />}
-                                    />
-                                </FormControl>
-                                <Stack direction={'row'} alignItems="center" justifyContent={'space-between'}>
-                                    <Stack direction={'row'} spacing={2}>
-                                        <LinkTo to="/signup">
-                                            <Button size="small" sx={{ color: 'gray' }}>
-                                                Sign Up
-                                            </Button>
-                                        </LinkTo>
-                                        <LinkTo to="/forgot-password">
-                                            <Button size="small" sx={{ color: 'gray' }}>
-                                                Forgot Password
-                                            </Button>
-                                        </LinkTo>
+            <Box
+                sx={{
+                    background:
+                        'url(https://firebasestorage.googleapis.com/v0/b/exploring-india.appspot.com/o/auth_images%2Flogin%2Fpexels-francesco-ungaro-998646.jpg?alt=media&token=e3942308-c027-4656-af88-7aeeb462acd8    )',
+                    backgroundSize: 'cover',
+                    objectFit: 'center',
+                }}
+            >
+                <Grid container width={'100%'}>
+                    <Grid item md={12} xs={12}>
+                        <StackBox w={{ md: '80%', xs: '100%' }}>
+                            <Box
+                                sx={{
+                                    padding: '20px',
+                                    background: 'rgba( 255, 255, 255, 0.2 )',
+                                    backdropFilter: 'blur( 20px )',
+                                    WebkitBackdropFilter: 'blur( 20px )',
+                                    border: '1px solid rgba( 255, 255, 255, 0.18 )',
+                                }}
+                            >
+                                <Box sx={{ marginBottom: '30px' }}>
+                                    <Typography fontSize={{ md: '3vw', xs: '5vw' }} fontWeight={'bold'}>
+                                        Sign In
+                                    </Typography>
+                                </Box>
+                                <div>
+                                    <Stack spacing={3}>
+                                        <FormControl fullWidth variant="filled">
+                                            <InputLabel htmlFor="outlined-adornment-email">Email</InputLabel>
+                                            <FilledInput
+                                                id="outlined-adornment-email"
+                                                value={form.email}
+                                                onChange={e =>
+                                                    setForm({
+                                                        ...form,
+                                                        email: e.target.value,
+                                                    })
+                                                }
+                                                endAdornment={<EmailIcon />}
+                                            />
+                                        </FormControl>
+                                        <FormControl fullWidth variant="filled">
+                                            <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
+                                            <FilledInput
+                                                id="outlined-adornment-password"
+                                                type="password"
+                                                value={form.password}
+                                                onChange={e =>
+                                                    setForm({
+                                                        ...form,
+                                                        password: e.target.value,
+                                                    })
+                                                }
+                                                endAdornment={<KeyIcon />}
+                                            />
+                                        </FormControl>
+                                        <Stack direction={'row'} alignItems="center" justifyContent={'space-between'}>
+                                            {matches && (
+                                                <Stack
+                                                    direction={{ md: 'row', xs: 'column' }}
+                                                    spacing={{ md: 2, xs: 0 }}
+                                                >
+                                                    <LinkTo to="/signup">
+                                                        <Button size="small" sx={{ color: 'black' }}>
+                                                            Sign Up
+                                                        </Button>
+                                                    </LinkTo>
+                                                    <LinkTo to="/forgot-password">
+                                                        <Button size="small" sx={{ color: 'black' }}>
+                                                            Forgot Password
+                                                        </Button>
+                                                    </LinkTo>
+                                                    <LinkTo to="/stackholder">
+                                                        <Button size="small" sx={{ color: 'black' }}>
+                                                            Upload Place details as stackholder
+                                                        </Button>
+                                                    </LinkTo>
+                                                </Stack>
+                                            )}
+                                            {!matches && (
+                                                <>
+                                                    <Button
+                                                        id="basic-button"
+                                                        aria-controls={open ? 'basic-menu' : undefined}
+                                                        aria-haspopup="true"
+                                                        aria-expanded={open ? 'true' : undefined}
+                                                        onClick={handleClick}
+                                                        size="small"
+                                                        sx={{ color: 'black' }}
+                                                    >
+                                                        Options
+                                                    </Button>
+                                                    <Menu
+                                                        id="basic-menu"
+                                                        anchorEl={anchorEl}
+                                                        open={open}
+                                                        onClose={handleClose}
+                                                        MenuListProps={{
+                                                            'aria-labelledby': 'basic-button',
+                                                        }}
+                                                    >
+                                                        <MenuItem onClick={handleClose}>
+                                                            <LinkTo to="/signup">
+                                                                <Button size="small" sx={{ color: 'black' }}>
+                                                                    Sign Up
+                                                                </Button>
+                                                            </LinkTo>
+                                                        </MenuItem>
+                                                        <MenuItem onClick={handleClose}>
+                                                            <LinkTo to="/forgot-password">
+                                                                <Button size="small" sx={{ color: 'black' }}>
+                                                                    Forgot Password
+                                                                </Button>
+                                                            </LinkTo>
+                                                        </MenuItem>
+                                                        <MenuItem onClick={handleClose}>
+                                                            <LinkTo to="/stackholder">
+                                                                <Button size="small" sx={{ color: 'black' }}>
+                                                                    Upload Place details as stackholder
+                                                                </Button>
+                                                            </LinkTo>
+                                                        </MenuItem>
+                                                    </Menu>
+                                                </>
+                                            )}
+                                            <LoadingButton
+                                                onClick={handleFormSubmit}
+                                                variant="contained"
+                                                loading={loading}
+                                            >
+                                                Log In
+                                            </LoadingButton>
+                                        </Stack>
                                     </Stack>
-                                    <LoadingButton onClick={handleFormSubmit} variant="contained" loading={loading}>
-                                        Log In
-                                    </LoadingButton>
-                                </Stack>
-                            </Stack>
-                        </div>
-                    </StackBox>
-                </Box>
-                <Divider orientation="vertical" variant="middle" flexItem />
-                <Box sx={{ width: '50%' }}>
-                    <StackBox w="80%">
-                        <Stack justifyContent="space-around">
-                            <Box>
-                                <Typography>Start planning your</Typography>
-                                <Typography variant="h1" fontWeight="bold">
-                                    Journey
-                                </Typography>
+                                </div>
+                                <div>
+                                    <LinkTo to="/admin/signin">
+                                        <Button size="small" sx={{ color: 'black' }}>
+                                            Admin Login
+                                        </Button>
+                                    </LinkTo>
+                                </div>
                             </Box>
-                            <Typography>“A journey of a thousand miles begins with a single step” – Lao Tzu</Typography>
-                        </Stack>
-                    </StackBox>
-                </Box>
-            </Stack>
+                        </StackBox>
+                    </Grid>
+                </Grid>
+            </Box>
         </>
     );
 };
