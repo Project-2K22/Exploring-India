@@ -159,9 +159,9 @@ const UserProfile = () => {
 
     };
     //UPDATE DATA END HERE
-const gohome = () => {
-navigate('/home')
-  };
+    const gohome = () => {
+    navigate('/home')
+      };
     //DELETE THE USER START 
 
       const [values, setValues] = React.useState({

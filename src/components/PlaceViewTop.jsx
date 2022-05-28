@@ -2,13 +2,17 @@ import React from 'react';
 import {Stack,Box,Typography,Button,CssBaseline} from '@mui/material';
 import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
+import { useNavigate } from 'react-router-dom';
+
 const PlaceViewTop = props => {
+    const navigate = useNavigate();
+
     return (
 // npm install react-photo-album
         <Box>
         <CssBaseline />
             <Stack direction="row"justifyContent="center"alignItems="center"spacing={0} width="100%">
-                <Stack width="80%" sx={{backgroundImage: 'url(https://firebasestorage.googleapis.com/v0/b/exploring-india.appspot.com/o/test_images%2FTest.jpg?alt=media&token=15f22587-aceb-483e-9502-22e0cede3841)',backgroundSize: 'cover',boxShadow: 3,borderBottomRightRadius: '13px',borderBottomLeftRadius: '13px'}} p={4.5}  direction="row"justifyContent="center"alignItems="center"spacing={0} >
+                <Stack width="80%" sx={{background:`linear-gradient(rgb(0, 0, 0,0.2),rgb(0, 0, 0,0.9)), url(${props.imagelinks[0]})`,backgroundSize: 'cover',boxShadow: 3,borderBottomRightRadius: '13px',borderBottomLeftRadius: '13px',backgroundPosition: 'center'}} p={4.5}  direction="row"justifyContent="center"alignItems="center"spacing={0} >
                     <Stack sx={{color:"white"}} direction="column"justifyContent="space-between"alignItems="flex-start"spacing={10} width="100%">
                         <Box>
                             <Button variant="text" startIcon={<KeyboardBackspaceIcon />} sx={{color:"white"}}>
@@ -18,14 +22,14 @@ const PlaceViewTop = props => {
                         <Stack spacing={2} width="100%">
                           <Box>
                             <Typography  variant="h4" fontWeight={'500'}>
-                                Backwaters, Kelara
+                                {props.name}, {props.city}
                             </Typography>
                           </Box>
                           <Box>
                               <Stack direction="row"justifyContent="space-between"alignItems="center" width="100%">
                                 <Box width="57%">
                                     <Typography  variant="subtitle2" fontWeight={'400'}>
-                                        I got this to work for material-ui, where the padding on my parent element was 24px so I added 48px to the width of the background image to make it work
+                                    {props.short_discription}
                                     </Typography>
                                 </Box>
                                 <Box >

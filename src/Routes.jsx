@@ -6,6 +6,7 @@ import ForgotPassword from './pages/ForgotPassword';
 import HomePage from './pages/HomePage';
 import UserPreference from './pages/UserPreference';
 import UserProfile from './pages/UserProfile';
+import PlaceView from './pages/PlaceView';
 
 const Routes = () => {
     return (
@@ -18,6 +19,7 @@ const Routes = () => {
                     <Route path="home" element={<HomePage />} />
                     <Route path="user-preference" element={<UserPreference />} />
                     <Route path="user-profile" element={<UserProfile />} />
+                    <Route path="place-view/:id" element={<PlaceView />} />
                     <Route path="*" element={<Navigate to="/login" replace />} />
                 </RS>
             </Router>
