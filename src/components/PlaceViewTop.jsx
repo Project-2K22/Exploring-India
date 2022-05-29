@@ -62,8 +62,9 @@ const PlaceViewTop = props => {
                                         </Typography>
                                     </Box>
                                     <Box>
-                                        <LinkTo to={`#map`}>
+                                        
                                             <Button
+                                                
                                                 variant="outlined"
                                                 endIcon={<RemoveRedEyeIcon />}
                                                 sx={{
@@ -76,7 +77,7 @@ const PlaceViewTop = props => {
                                             >
                                                 Open in Map
                                             </Button>
-                                        </LinkTo>
+                                        
                                     </Box>
                                 </Stack>
                             </Box>
