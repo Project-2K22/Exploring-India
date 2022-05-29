@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { Box, Stack, Typography, Divider, Button, Paper } from '@mui/material';
+import { Box, Stack, Typography, Divider, Button, Paper, Alert, AlertTitle } from '@mui/material';
 import PlaceViewTop from '../components/PlaceViewTop';
 import IndexCard from '../components/IndexCard';
 import ReactReadMoreReadLess from 'react-read-more-read-less';
@@ -19,6 +19,8 @@ import 'mapbox-gl/dist/mapbox-gl.css';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import Loader from '../components/Loader';
 import WeatherCard from '../components/WeatherCard';
+import HotelIcon from '@mui/icons-material/Hotel';
+import RestaurantIcon from '@mui/icons-material/Restaurant';
 mapboxgl.accessToken = process.env.REACT_APP_MAP_MAPBOX_ACCESS_TOKEN;
 //FOR MAP
 
@@ -48,44 +50,13 @@ const PlaceView = () => {
         zoom: 5,
     });
     const [selectedPark, setSelectedPark] = useState(null);
+    const [selectHotelandRes, setSelectHotelandRes] = useState(null);
     const [hotels, setHotels] = useState([]);
     const [resturents, setResturents] = useState([]);
     //FOR MAP END
 
     //FOR RES
-    useEffect(() => {
-        const getPlacesData = async type => {
-            try {
-                const {
-                    data: { data },
-                } = await axios.get(`https://travel-advisor.p.rapidapi.com/${type}/list-by-latlng`, {
-                    params: {
-                        latitude: 22.5448, // soth west
-                        longitude: 88.3426, // south west
-                    },
-                    //
-                    headers: {
-                        // 'content-type': 'application/json',
-                        'X-RapidAPI-Host': 'travel-advisor.p.rapidapi.com',
-                        'X-RapidAPI-Key': process.env.REACT_APP_RH_RAPID_API_ID,
-                    },
-                });
-
-                return data;
-            } catch (error) {
-                console.log(error);
-            }
-        };
-
-        getPlacesData('hotels').then(data => {
-            console.log(data);
-            setHotels(data.filter((d, k) => d.name && d.ranking_geo && d.photo?.images?.original?.url));
-        });
-        getPlacesData('restaurants').then(data => {
-            console.log(data);
-            setResturents(data.filter((d, k) => d.name && d.ranking_geo && d.photo?.images?.original?.url));
-        });
-    }, []);
+    useEffect(() => {}, []);
     //FOR RES END
 
     //IMP STRT
@@ -115,6 +86,41 @@ const PlaceView = () => {
                             setPlaceData(placeAllData);
                         }
                         if (childData.id === placeId) {
+                            const getPlacesData = async type => {
+                                //FOR RETURENT AND HOTEL
+                                try {
+                                    const {
+                                        data: { data },
+                                    } = await axios.get(`https://travel-advisor.p.rapidapi.com/${type}/list-by-latlng`, {
+                                        params: {
+                                            latitude: childData.latitude, // soth west
+                                            longitude: childData.longitude, // south west
+                                        },
+                                        //
+                                        headers: {
+                                            // 'content-type': 'application/json',
+                                            'X-RapidAPI-Host': 'travel-advisor.p.rapidapi.com',
+                                            'X-RapidAPI-Key': '753b1bed66mshe30f518502b96f6p174fdfjsn2621e6ff20a1',
+                                        },
+                                    });
+
+                                    return data;
+                                } catch (error) {
+                                    console.log(error);
+                                }
+                            };
+
+                            getPlacesData('hotels').then(data => {
+                                setHotels(data.filter((d, k) => d.name && d.ranking_geo && d.photo?.images?.original?.url));
+                            });
+                            getPlacesData('restaurants').then(data => {
+                                setResturents(data.filter((d, k) => d.name && d.ranking_geo && d.photo?.images?.original?.url));
+                            });
+
+                            //FOR RETURENT AND HOTEL
+
+                            setCenterLat(childData.latitude);
+                            setCenterLong(childData.longitude);
                             setPlaceDetails(childData);
                             setViewport({
                                 latitude: childData.latitude,
@@ -163,7 +169,7 @@ const PlaceView = () => {
             {placeDetails !== null && pageReady === true && placeData !== null ? (
                 <Box>
                     <PlaceViewTop {...placeDetails} />
-                    <WeatherCard lat={centerLat} lng={centerLong} />
+                    <WeatherCard lat={placeDetails.latitude} lon={placeDetails.longitude} />
                     <Box p={10} ml={8} pt={0}>
                         <Typography variant="h6" marginTop="5%" sx={{ fontWeight: 'bold', fontSize: '2rem', opacity: '0.8' }}>
                             Khow more about {placeDetails.name}
@@ -188,10 +194,24 @@ const PlaceView = () => {
 
                     {/* resturents */}
 
-                    <SlideingCards type="reshol" value={{ topHeading: 'Near by resturents', data: resturents }} />
+                    {resturents.length === 0 ? (
+                        <Alert severity="error" sx={{ width: '80%', margin: '0 auto 20px auto' }}>
+                            <AlertTitle>Error</AlertTitle>
+                            OOPS !!!!. Our database does'nt have enough data about nearby restaurants
+                        </Alert>
+                    ) : (
+                        <SlideingCards type="reshol" value={{ topHeading: 'Near by resturents', data: resturents }} />
+                    )}
 
                     {/* hotels */}
-                    <SlideingCards type="reshol" value={{ topHeading: 'Near by hotels', data: hotels }} />
+                    {hotels.length === 0 ? (
+                        <Alert severity="error" sx={{ width: '80%', margin: '0 auto 20px auto' }}>
+                            <AlertTitle>Error</AlertTitle>
+                            OOPS !!!!. Our database does'nt have enough data about nearby hotels
+                        </Alert>
+                    ) : (
+                        <SlideingCards type="reshol" value={{ topHeading: 'Near by hotels', data: hotels }} />
+                    )}
 
                     <section id="map">
                         <div
@@ -227,22 +247,39 @@ const PlaceView = () => {
                                         </button>
                                     </Marker>
                                 ))}
-                                {placeAllDataUS.map(park => (
-                                    <Marker latitude={park.latitude} longitude={park.longitude} anchor="bottom" key={park.id}>
+                                {hotels.map(park => (
+                                    <Marker latitude={park.latitude} longitude={park.longitude} anchor="bottom" key={park.location_id}>
                                         <button
                                             className="marker-btn"
                                             style={markarStyle}
                                             onClick={e => {
                                                 e.preventDefault();
-                                                setSelectedPark(park);
+                                                setSelectHotelandRes(park);
                                             }}
                                         >
-                                            <LocationOnIcon />
+                                            <HotelIcon />
                                             <br />
                                             {park.name}
                                         </button>
                                     </Marker>
                                 ))}
+                                {resturents.map(park => (
+                                    <Marker latitude={park.latitude} longitude={park.longitude} anchor="bottom" key={park.location_id}>
+                                        <button
+                                            className="marker-btn"
+                                            style={markarStyle}
+                                            onClick={e => {
+                                                e.preventDefault();
+                                                setSelectHotelandRes(park);
+                                            }}
+                                        >
+                                            <RestaurantIcon />
+                                            <br />
+                                            {park.name}
+                                        </button>
+                                    </Marker>
+                                ))}
+
                                 {selectedPark ? (
                                     <Popup
                                         latitude={selectedPark.latitude}
@@ -256,6 +293,39 @@ const PlaceView = () => {
                                                 <h2>{selectedPark.name}</h2>
                                             </LinkTo>
                                             <p>{selectedPark.short_discription}</p>
+                                        </div>
+                                    </Popup>
+                                ) : null}
+
+                                {selectHotelandRes ? (
+                                    <Popup
+                                        latitude={selectHotelandRes.latitude}
+                                        longitude={selectHotelandRes.longitude}
+                                        onClose={() => {
+                                            setSelectHotelandRes(null);
+                                        }}
+                                    >
+                                        <div>
+                                            <h2 style={{ cursor: 'pointer' }}>
+                                                <a
+                                                    href
+                                                    onClick={() => {
+                                                        window.open(
+                                                            `https://www.google.com/maps/?q=${selectHotelandRes.latitude},${selectHotelandRes.longitude}`
+                                                        );
+                                                    }}
+                                                    target="_blank"
+                                                >
+                                                    {selectHotelandRes.name}
+                                                </a>
+                                            </h2>
+
+                                            <p>{selectHotelandRes.location_string}</p>
+                                            <p>{selectHotelandRes.ranking}</p>
+                                            <p>Rating: {selectHotelandRes.rating}</p>
+                                            <p>Approx Distance: {selectHotelandRes.distance.slice(0, 4)} KM</p>
+                                            <p>{selectHotelandRes.hotel_class}</p>
+                                            <p>{selectHotelandRes.price}</p>
                                         </div>
                                     </Popup>
                                 ) : null}
