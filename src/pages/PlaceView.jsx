@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { Box, Stack, Typography, Divider, Button } from '@mui/material';
+import { Box, Stack, Typography, Divider, Button, Paper } from '@mui/material';
 import PlaceViewTop from '../components/PlaceViewTop';
 import IndexCard from '../components/IndexCard';
 import ReactReadMoreReadLess from 'react-read-more-read-less';
@@ -18,7 +18,8 @@ import mapboxgl from 'mapbox-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import Loader from '../components/Loader';
-mapboxgl.accessToken = 'pk.eyJ1IjoiaGV5YXRhbnUiLCJhIjoiY2t2dHhzaGx0MjhjMzJvcWhid2xmaHN5OCJ9.NBHK-tlVNvbNlg7nh5n5mQ';
+import WeatherCard from '../components/WeatherCard';
+mapboxgl.accessToken = process.env.REACT_APP_MAP_MAPBOX_ACCESS_TOKEN;
 //FOR MAP
 
 const markarStyle = {
@@ -66,7 +67,7 @@ const PlaceView = () => {
                     headers: {
                         // 'content-type': 'application/json',
                         'X-RapidAPI-Host': 'travel-advisor.p.rapidapi.com',
-                        'X-RapidAPI-Key': '753b1bed66mshe30f518502b96f6p174fdfjsn2621e6ff20a1',
+                        'X-RapidAPI-Key': process.env.REACT_APP_RH_RAPID_API_ID,
                     },
                 });
 
@@ -162,6 +163,7 @@ const PlaceView = () => {
             {placeDetails !== null && pageReady === true && placeData !== null ? (
                 <Box>
                     <PlaceViewTop {...placeDetails} />
+                    <WeatherCard lat={centerLat} lng={centerLong} />
                     <Box p={10} ml={8} pt={0}>
                         <Typography variant="h6" marginTop="5%" sx={{ fontWeight: 'bold', fontSize: '2rem', opacity: '0.8' }}>
                             Khow more about {placeDetails.name}

@@ -15,6 +15,7 @@ import ImageCard from '../components/ImageCard';
 import Carousel from 'react-simply-carousel';
 import haversine from 'haversine';
 import Loader from '../components/Loader';
+import AboutUs from '../components/About';
 
 const HomePage = () => {
     const [uid, setUid] = useState(null);
@@ -513,290 +514,295 @@ const HomePage = () => {
 
     //ALL THE FUNCTIONS END
     return (
-        <Box
-            width="100%"
-            height="100%"
-            sx={{
-                overflow: 'hidden',
-                background:
-                    'linear-gradient(rgb(0, 0, 0,0.2),rgb(0, 0, 255,0.1)), url(https://firebasestorage.googleapis.com/v0/b/exploring-india.appspot.com/o/test_images%2Frt.jpg?alt=media&token=3d4c03d6-967f-4025-906d-6a272ee80010)',
-                backgroundSize: 'cover',
-                backgroundAttachment: 'fixed',
-                backgroundPosition: 'center',
-            }}
-        >
-            <CssBaseline />
+        <>
+            <Box
+                width="100%"
+                height="100%"
+                sx={{
+                    overflow: 'hidden',
+                    background:
+                        'linear-gradient(rgb(0, 0, 0,0.2),rgb(0, 0, 255,0.1)), url(https://firebasestorage.googleapis.com/v0/b/exploring-india.appspot.com/o/test_images%2Frt.jpg?alt=media&token=3d4c03d6-967f-4025-906d-6a272ee80010)',
+                    backgroundSize: 'cover',
+                    backgroundAttachment: 'fixed',
+                    backgroundPosition: 'center',
+                }}
+            >
+                <CssBaseline />
 
-            <NavBar {...navBarProps} />
+                <NavBar {...navBarProps} />
 
-            {pageReady === true && placeData !== null ? (
-                uid !== null && userData !== null && userStateName !== null ? (
-                    <Box>
-                        <Stack spacing={2} direction="column" height="100vh">
-                            <Stack ml={17.5} mt={20} direction="column" spacing={2}>
-                                <Stack direction="row" spacing={10} width="auto">
-                                    <Box>
-                                        <Stack spacing={2}>
-                                            <Typography variant="h1" style={{ color: 'white', fontWeight: '500' }}>
-                                                Beautiful places of India
-                                            </Typography>
-                                            <Typography
-                                                variant="subtitle2"
-                                                style={{ color: 'white', fontWeight: '400', fontSize: '1.4rem' }}
-                                            >
-                                                Plan your vacation on the most beautiful places of india
-                                            </Typography>
-                                        </Stack>
-                                    </Box>
-                                    <Box sx={{ overflowY: 'hidden', width: '65%' }}>
-                                        <div style={{ boxShadow: 'rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px' }}>
-                                            <Carousel
-                                                updateOnItemClick
-                                                containerProps={{}}
-                                                activeSlideIndex={activeSlide}
-                                                activeSlideProps={{}}
-                                                onRequestChange={setActiveSlide}
-                                                forwardBtnProps={{
-                                                    children: <NavigateNextIcon />,
-                                                    style: {
-                                                        width: 60,
-                                                        height: 30,
-                                                        minWidth: 60,
-                                                        alignSelf: 'center',
-                                                        outline: 'none',
-                                                        margin: '5px',
-                                                        border: 'none',
-                                                        background: 'transparent',
-                                                        color: 'white',
-                                                        cursor: 'pointer',
-                                                        padding: '20px',
-                                                    },
-                                                }}
-                                                backwardBtnProps={{ children: '<', style: { display: 'none' } }}
-                                                itemsToShow={1}
-                                                itemsToScroll={1}
-                                                speed={1000}
-                                                infinite={true}
-                                                easing="linear"
-                                            >
-                                                {placesSuggestedByUs(3).map(val => {
-                                                    return (
-                                                        <ImageCard
-                                                            key={val.id}
-                                                            value={{
-                                                                onClickFun: () => {
-                                                                    goToPageForCarousel(val.id, uid);
-                                                                },
-                                                                placeName: val.name,
-                                                                city: val.city,
-                                                                buttonName: 'view',
-                                                                imageLink: val.imagelinks[0],
-                                                            }}
-                                                        />
-                                                    );
-                                                })}
-                                            </Carousel>
-                                        </div>
-                                    </Box>
+                {pageReady === true && placeData !== null ? (
+                    uid !== null && userData !== null && userStateName !== null ? (
+                        <Box>
+                            <Stack spacing={2} direction="column" height="100vh">
+                                <Stack ml={17.5} mt={20} direction="column" spacing={2}>
+                                    <Stack direction="row" spacing={10} width="auto">
+                                        <Box>
+                                            <Stack spacing={2}>
+                                                <Typography variant="h1" style={{ color: 'white', fontWeight: '500' }}>
+                                                    Beautiful places of India
+                                                </Typography>
+                                                <Typography
+                                                    variant="subtitle2"
+                                                    style={{ color: 'white', fontWeight: '400', fontSize: '1.4rem' }}
+                                                >
+                                                    Plan your vacation on the most beautiful places of india
+                                                </Typography>
+                                            </Stack>
+                                        </Box>
+                                        <Box sx={{ overflowY: 'hidden', width: '65%' }}>
+                                            <div style={{ boxShadow: 'rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px' }}>
+                                                <Carousel
+                                                    updateOnItemClick
+                                                    containerProps={{}}
+                                                    activeSlideIndex={activeSlide}
+                                                    activeSlideProps={{}}
+                                                    onRequestChange={setActiveSlide}
+                                                    forwardBtnProps={{
+                                                        children: <NavigateNextIcon />,
+                                                        style: {
+                                                            width: 60,
+                                                            height: 30,
+                                                            minWidth: 60,
+                                                            alignSelf: 'center',
+                                                            outline: 'none',
+                                                            margin: '5px',
+                                                            border: 'none',
+                                                            background: 'transparent',
+                                                            color: 'white',
+                                                            cursor: 'pointer',
+                                                            padding: '20px',
+                                                        },
+                                                    }}
+                                                    backwardBtnProps={{ children: '<', style: { display: 'none' } }}
+                                                    itemsToShow={1}
+                                                    itemsToScroll={1}
+                                                    speed={1000}
+                                                    infinite={true}
+                                                    easing="linear"
+                                                >
+                                                    {placesSuggestedByUs(3).map(val => {
+                                                        return (
+                                                            <ImageCard
+                                                                key={val.id}
+                                                                value={{
+                                                                    onClickFun: () => {
+                                                                        goToPageForCarousel(val.id, uid);
+                                                                    },
+                                                                    placeName: val.name,
+                                                                    city: val.city,
+                                                                    buttonName: 'view',
+                                                                    imageLink: val.imagelinks[0],
+                                                                }}
+                                                            />
+                                                        );
+                                                    })}
+                                                </Carousel>
+                                            </div>
+                                        </Box>
+                                    </Stack>
                                 </Stack>
                             </Stack>
-                        </Stack>
-                        <SlideingCards
-                            value={{
-                                uid: uid,
-                                placeData: userData.placeVisited,
-                                topHeading: 'Places near by you can visit',
-                                data: placeData.filter(filterPlaceDataByDistance(10)),
-                            }}
-                        />
-                        <SlideingCards
-                            value={{
-                                uid: uid,
-                                placeData: userData.placeVisited,
-                                topHeading: 'Most visited places you can visit',
-                                data: GetPlaceDataByVisitors(3),
-                            }}
-                        />
-                        <SlideingCards
-                            value={{
-                                uid: uid,
-                                placeData: userData.placeVisited,
-                                topHeading: 'Place recommended based on your preference and uses',
-                                data: userPreferenceData(),
-                            }}
-                        />
-                        <SlideingCards
-                            value={{
-                                uid: uid,
-                                placeData: userData.placeVisited,
-                                topHeading: 'Place recommended by us',
-                                data: placesSuggestedByUs(4),
-                            }}
-                        />
-                        {/*FOR HERITAGE SITE START*/}
-                        <SlideingCards
-                            value={{
-                                uid: uid,
-                                placeData: userData.placeVisited,
-                                topHeading: 'Heritage places you can visit',
-                                data: placeData.filter(filterTypeOfData('heritage')),
-                            }}
-                        />
-                        {/*FOR HERITAGE SITE END*/}
-                        {/*FOR MOUNTAIN SITE START*/}
-                        <SlideingCards
-                            value={{
-                                uid: uid,
-                                placeData: userData.placeVisited,
-                                topHeading: 'Mountains you can visit',
-                                data: placeData.filter(filterTypeOfData('mountain')),
-                            }}
-                        />
-                        {/*FOR MOUNTAIN SITE END*/}
-                        {/*FOR SEA SITE START*/}
-                        <SlideingCards
-                            value={{
-                                uid: uid,
-                                placeData: userData.placeVisited,
-                                topHeading: 'Sea you can visit',
-                                data: placeData.filter(filterTypeOfData('sea')),
-                            }}
-                        />
-                        {/*FOR SEA SITE END*/}
-                        {/*FOR Desert SITE START*/}
-                        <SlideingCards
-                            value={{
-                                uid: uid,
-                                placeData: userData.placeVisited,
-                                topHeading: 'Desert you can visit',
-                                data: placeData.filter(filterTypeOfData('desert')),
-                            }}
-                        />
-                        {/*FOR Desert SITE END*/}
-                    </Box>
+                            <SlideingCards
+                                value={{
+                                    uid: uid,
+                                    placeData: userData.placeVisited,
+                                    topHeading: 'Places near by you can visit',
+                                    data: placeData.filter(filterPlaceDataByDistance(10)),
+                                }}
+                            />
+                            <SlideingCards
+                                value={{
+                                    uid: uid,
+                                    placeData: userData.placeVisited,
+                                    topHeading: 'Most visited places you can visit',
+                                    data: GetPlaceDataByVisitors(3),
+                                }}
+                            />
+                            <SlideingCards
+                                value={{
+                                    uid: uid,
+                                    placeData: userData.placeVisited,
+                                    topHeading: 'Place recommended based on your preference and uses',
+                                    data: userPreferenceData(),
+                                }}
+                            />
+                            <SlideingCards
+                                value={{
+                                    uid: uid,
+                                    placeData: userData.placeVisited,
+                                    topHeading: 'Place recommended by us',
+                                    data: placesSuggestedByUs(4),
+                                }}
+                            />
+                            {/*FOR HERITAGE SITE START*/}
+                            <SlideingCards
+                                value={{
+                                    uid: uid,
+                                    placeData: userData.placeVisited,
+                                    topHeading: 'Heritage places you can visit',
+                                    data: placeData.filter(filterTypeOfData('heritage')),
+                                }}
+                            />
+                            {/*FOR HERITAGE SITE END*/}
+                            {/*FOR MOUNTAIN SITE START*/}
+                            <SlideingCards
+                                value={{
+                                    uid: uid,
+                                    placeData: userData.placeVisited,
+                                    topHeading: 'Mountains you can visit',
+                                    data: placeData.filter(filterTypeOfData('mountain')),
+                                }}
+                            />
+                            {/*FOR MOUNTAIN SITE END*/}
+                            {/*FOR SEA SITE START*/}
+                            <SlideingCards
+                                value={{
+                                    uid: uid,
+                                    placeData: userData.placeVisited,
+                                    topHeading: 'Sea you can visit',
+                                    data: placeData.filter(filterTypeOfData('sea')),
+                                }}
+                            />
+                            {/*FOR SEA SITE END*/}
+                            {/*FOR Desert SITE START*/}
+                            <SlideingCards
+                                value={{
+                                    uid: uid,
+                                    placeData: userData.placeVisited,
+                                    topHeading: 'Desert you can visit',
+                                    data: placeData.filter(filterTypeOfData('desert')),
+                                }}
+                            />
+                            {/*FOR Desert SITE END*/}
+                        </Box>
+                    ) : (
+                        //FOR USER NOT LOGED IN START FOR ALL THIS WILL SHOW
+                        <Box>
+                            <Stack spacing={2} direction="column" height="100vh">
+                                <Stack ml={17.5} mt={20} direction="column" spacing={2}>
+                                    <Stack direction={{ md: 'row', xs: 'column' }} spacing={10} width="auto">
+                                        <Box>
+                                            <Stack spacing={2}>
+                                                <Typography variant="h1" style={{ color: 'white', fontWeight: '500' }}>
+                                                    Beautiful places of India
+                                                </Typography>
+                                                <Typography
+                                                    variant="subtitle2"
+                                                    style={{ color: 'white', fontWeight: '400', fontSize: '1.4rem' }}
+                                                >
+                                                    Plan your vacation on the most beautiful places of india
+                                                </Typography>
+                                            </Stack>
+                                        </Box>
+                                        <Box sx={{ overflowY: 'hidden', width: '65%' }}>
+                                            <div style={{ boxShadow: 'rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px' }}>
+                                                <Carousel
+                                                    updateOnItemClick
+                                                    containerProps={{}}
+                                                    activeSlideIndex={activeSlide}
+                                                    activeSlideProps={{}}
+                                                    onRequestChange={setActiveSlide}
+                                                    forwardBtnProps={{
+                                                        children: <NavigateNextIcon />,
+                                                        style: {
+                                                            width: 60,
+                                                            height: 30,
+                                                            minWidth: 60,
+                                                            alignSelf: 'center',
+                                                            outline: 'none',
+                                                            margin: '5px',
+                                                            border: 'none',
+                                                            background: 'transparent',
+                                                            color: 'white',
+                                                            cursor: 'pointer',
+                                                            padding: '20px',
+                                                        },
+                                                    }}
+                                                    backwardBtnProps={{ children: '<', style: { display: 'none' } }}
+                                                    itemsToShow={1}
+                                                    itemsToScroll={1}
+                                                    speed={1000}
+                                                    infinite={true}
+                                                    easing="linear"
+                                                >
+                                                    {placesSuggestedByUs(3).map(val => {
+                                                        return (
+                                                            <ImageCard
+                                                                key={val.id}
+                                                                value={{
+                                                                    onClickFun: () => {
+                                                                        goToPageForCarousel(val.id);
+                                                                    },
+                                                                    placeName: val.name,
+                                                                    city: val.city,
+                                                                    buttonName: 'view',
+                                                                    imageLink: val.imagelinks[0],
+                                                                }}
+                                                            />
+                                                        );
+                                                    })}
+                                                </Carousel>
+                                            </div>
+                                        </Box>
+                                    </Stack>
+                                </Stack>
+                            </Stack>
+                            <SlideingCards
+                                value={{
+                                    // uid: uid,
+                                    // placeData: userData.placeVisited,
+                                    topHeading: 'Most visited places you can visit',
+                                    data: GetPlaceDataByVisitors(3),
+                                }}
+                            />
+                            <SlideingCards
+                                value={{
+                                    // uid: uid,
+                                    // placeData: userData.placeVisited,
+                                    topHeading: 'Place recommended by us',
+                                    data: placesSuggestedByUs(4),
+                                }}
+                            />
+
+                            {/*FOR HERITAGE SITE START*/}
+                            <SlideingCards
+                                value={{
+                                    topHeading: 'Heritage places you can visit',
+                                    data: placeData.filter(filterTypeOfData('heritage')),
+                                }}
+                            />
+                            {/*FOR HERITAGE SITE END*/}
+                            {/*FOR MOUNTAIN SITE START*/}
+                            <SlideingCards
+                                value={{
+                                    topHeading: 'Mountains you can visit',
+                                    data: placeData.filter(filterTypeOfData('mountain')),
+                                }}
+                            />
+                            {/*FOR MOUNTAIN SITE END*/}
+                            {/*FOR SEA SITE START*/}
+                            <SlideingCards value={{ topHeading: 'Sea you can visit', data: placeData.filter(filterTypeOfData('sea')) }} />
+                            {/*FOR SEA SITE END*/}
+                            {/*FOR Desert SITE START*/}
+                            <SlideingCards
+                                value={{
+                                    topHeading: 'Desert you can visit',
+                                    data: placeData.filter(filterTypeOfData('desert')),
+                                }}
+                            />
+                            {/*FOR Desert SITE END*/}
+                        </Box>
+                    )
                 ) : (
-                    //FOR USER NOT LOGED IN START FOR ALL THIS WILL SHOW
-                    <Box>
-                        <Stack spacing={2} direction="column" height="100vh">
-                            <Stack ml={17.5} mt={20} direction="column" spacing={2}>
-                                <Stack direction={{ md: 'row', xs: 'column' }} spacing={10} width="auto">
-                                    <Box>
-                                        <Stack spacing={2}>
-                                            <Typography variant="h1" style={{ color: 'white', fontWeight: '500' }}>
-                                                Beautiful places of India
-                                            </Typography>
-                                            <Typography
-                                                variant="subtitle2"
-                                                style={{ color: 'white', fontWeight: '400', fontSize: '1.4rem' }}
-                                            >
-                                                Plan your vacation on the most beautiful places of india
-                                            </Typography>
-                                        </Stack>
-                                    </Box>
-                                    <Box sx={{ overflowY: 'hidden', width: '65%' }}>
-                                        <div style={{ boxShadow: 'rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px' }}>
-                                            <Carousel
-                                                updateOnItemClick
-                                                containerProps={{}}
-                                                activeSlideIndex={activeSlide}
-                                                activeSlideProps={{}}
-                                                onRequestChange={setActiveSlide}
-                                                forwardBtnProps={{
-                                                    children: <NavigateNextIcon />,
-                                                    style: {
-                                                        width: 60,
-                                                        height: 30,
-                                                        minWidth: 60,
-                                                        alignSelf: 'center',
-                                                        outline: 'none',
-                                                        margin: '5px',
-                                                        border: 'none',
-                                                        background: 'transparent',
-                                                        color: 'white',
-                                                        cursor: 'pointer',
-                                                        padding: '20px',
-                                                    },
-                                                }}
-                                                backwardBtnProps={{ children: '<', style: { display: 'none' } }}
-                                                itemsToShow={1}
-                                                itemsToScroll={1}
-                                                speed={1000}
-                                                infinite={true}
-                                                easing="linear"
-                                            >
-                                                {placesSuggestedByUs(3).map(val => {
-                                                    return (
-                                                        <ImageCard
-                                                            key={val.id}
-                                                            value={{
-                                                                onClickFun: () => {
-                                                                    goToPageForCarousel(val.id);
-                                                                },
-                                                                placeName: val.name,
-                                                                city: val.city,
-                                                                buttonName: 'view',
-                                                                imageLink: val.imagelinks[0],
-                                                            }}
-                                                        />
-                                                    );
-                                                })}
-                                            </Carousel>
-                                        </div>
-                                    </Box>
-                                </Stack>
-                            </Stack>
-                        </Stack>
-                        <SlideingCards
-                            value={{
-                                // uid: uid,
-                                // placeData: userData.placeVisited,
-                                topHeading: 'Most visited places you can visit',
-                                data: GetPlaceDataByVisitors(3),
-                            }}
-                        />
-                        <SlideingCards
-                            value={{
-                                // uid: uid,
-                                // placeData: userData.placeVisited,
-                                topHeading: 'Place recommended by us',
-                                data: placesSuggestedByUs(4),
-                            }}
-                        />
-
-                        {/*FOR HERITAGE SITE START*/}
-                        <SlideingCards
-                            value={{
-                                topHeading: 'Heritage places you can visit',
-                                data: placeData.filter(filterTypeOfData('heritage')),
-                            }}
-                        />
-                        {/*FOR HERITAGE SITE END*/}
-                        {/*FOR MOUNTAIN SITE START*/}
-                        <SlideingCards
-                            value={{
-                                topHeading: 'Mountains you can visit',
-                                data: placeData.filter(filterTypeOfData('mountain')),
-                            }}
-                        />
-                        {/*FOR MOUNTAIN SITE END*/}
-                        {/*FOR SEA SITE START*/}
-                        <SlideingCards value={{ topHeading: 'Sea you can visit', data: placeData.filter(filterTypeOfData('sea')) }} />
-                        {/*FOR SEA SITE END*/}
-                        {/*FOR Desert SITE START*/}
-                        <SlideingCards
-                            value={{
-                                topHeading: 'Desert you can visit',
-                                data: placeData.filter(filterTypeOfData('desert')),
-                            }}
-                        />
-                        {/*FOR Desert SITE END*/}
-                    </Box>
-                )
-            ) : (
-                //FOR USER NOT LOGED IN END
-                <Loader />
-            )}
-        </Box>
+                    //FOR USER NOT LOGED IN END
+                    <Loader />
+                )}
+            </Box>
+            <div style={{ marginY: '30px' }}>
+                <AboutUs />
+            </div>
+        </>
     );
 };
 
