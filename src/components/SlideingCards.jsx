@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Stack, Box, Typography } from '@mui/material';
 import ImageCard from '../components/ImageCard';
-import { auth, db } from '../firebase/config';
-import { getDatabase, ref, child, get, update } from 'firebase/database';
+import { db } from '../firebase/config';
+import { ref, update } from 'firebase/database';
 import { useNavigate } from 'react-router-dom';
 
 //FOR SCROLLING START
@@ -13,7 +13,7 @@ import useDrag from '../components/useDrag';
 const SlideingCards = props => {
     const navigate = useNavigate();
 
-    const { dragStart, dragStop, dragMove, dragging } = useDrag();
+    const { dragStart, dragStop, dragMove } = useDrag();
     const handleDrag =
         ({ scrollContainer }) =>
         ev =>
@@ -35,14 +35,12 @@ const SlideingCards = props => {
             })
             .catch(function (error) {
                 const errorMessage = error.message;
+                console.log(errorMessage);
             });
     };
 
-
     const openGoogleMap = (lat, long) => {
-        window.open(
-                                      `https://www.google.com/maps/?q=${lat},${long}`
-        );
+        window.open(`https://www.google.com/maps/?q=${lat},${long}`);
     };
 
     return (
@@ -86,7 +84,7 @@ const SlideingCards = props => {
                                                     key={val.id}
                                                     value={{
                                                         onClickFun: () => {
-                                                            openGoogleMap(val.latitude,val.longitude);
+                                                            openGoogleMap(val.latitude, val.longitude);
                                                         },
                                                         placeName: val.name,
                                                         city: val.ranking_geo,
