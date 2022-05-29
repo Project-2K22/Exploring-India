@@ -56,9 +56,6 @@ const PlaceView = () => {
     const [resturents, setResturents] = useState([]);
     //FOR MAP END
 
-    //FOR RES
-    useEffect(() => {}, []);
-    //FOR RES END
 
     //IMP STRT
     const [placeId, setPlaceId] = useState(id);
@@ -173,7 +170,7 @@ const PlaceView = () => {
                     <WeatherCard lat={placeDetails.latitude} lon={placeDetails.longitude} />
                     <Box p={10} ml={8} pt={0}>
                         <Typography variant="h6" marginTop="5%" sx={{ fontWeight: 'bold', fontSize: '2rem', opacity: '0.8' }}>
-                            Khow more about {placeDetails.name}
+                            Know more about {placeDetails.name}
                         </Typography>
                         <Typography variant="h6" sx={{ color: 'black', opacity: '0.6', fontSize: '1.1rem' }}>
                             <ReactReadMoreReadLess
@@ -201,7 +198,7 @@ const PlaceView = () => {
                             OOPS !!!!. Our database does'nt have enough data about nearby restaurants
                         </Alert>
                     ) : (
-                        <SlideingCards type="reshol" value={{ topHeading: 'Near by resturents', data: resturents }} />
+                        <SlideingCards type="reshol" value={{ topHeading: 'Near by restaurants', data: resturents }} />
                     )}
 
                     {/* hotels */}

@@ -38,6 +38,13 @@ const SlideingCards = props => {
             });
     };
 
+
+    const openGoogleMap = (lat, long) => {
+        window.open(
+                                      `https://www.google.com/maps/?q=${lat},${long}`
+        );
+    };
+
     return (
         <Box>
             <Stack spacing={2} width="100%" direction="column">
@@ -79,7 +86,7 @@ const SlideingCards = props => {
                                                     key={val.id}
                                                     value={{
                                                         onClickFun: () => {
-                                                            goToPageForSlide(val.id, props.value.uid, props.value.placeData);
+                                                            openGoogleMap(val.latitude,val.longitude);
                                                         },
                                                         placeName: val.name,
                                                         city: val.ranking_geo,
