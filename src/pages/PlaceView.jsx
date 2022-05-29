@@ -18,6 +18,8 @@ import mapboxgl from 'mapbox-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import Loader from '../components/Loader';
+import HotelIcon from '@mui/icons-material/Hotel';
+import RestaurantIcon from '@mui/icons-material/Restaurant';
 mapboxgl.accessToken = 'pk.eyJ1IjoiaGV5YXRhbnUiLCJhIjoiY2t2dHhzaGx0MjhjMzJvcWhid2xmaHN5OCJ9.NBHK-tlVNvbNlg7nh5n5mQ';
 //FOR MAP
 
@@ -47,43 +49,16 @@ const PlaceView = () => {
         zoom: 5,
     });
     const [selectedPark, setSelectedPark] = useState(null);
+     const [selectHotelandRes, setSelectHotelandRes] = useState(null);
     const [hotels, setHotels] = useState([]);
     const [resturents, setResturents] = useState([]);
     //FOR MAP END
 
     //FOR RES
     useEffect(() => {
-        const getPlacesData = async type => {
-            try {
-                const {
-                    data: { data },
-                } = await axios.get(`https://travel-advisor.p.rapidapi.com/${type}/list-by-latlng`, {
-                    params: {
-                        latitude: 22.5448, // soth west
-                        longitude: 88.3426, // south west
-                    },
-                    //
-                    headers: {
-                        // 'content-type': 'application/json',
-                        'X-RapidAPI-Host': 'travel-advisor.p.rapidapi.com',
-                        'X-RapidAPI-Key': '753b1bed66mshe30f518502b96f6p174fdfjsn2621e6ff20a1',
-                    },
-                });
+  
 
-                return data;
-            } catch (error) {
-                console.log(error);
-            }
-        };
 
-        getPlacesData('hotels').then(data => {
-            console.log(data);
-            setHotels(data.filter((d, k) => d.name && d.ranking_geo && d.photo?.images?.original?.url));
-        });
-        getPlacesData('restaurants').then(data => {
-            console.log(data);
-            setResturents(data.filter((d, k) => d.name && d.ranking_geo && d.photo?.images?.original?.url));
-        });
     }, []);
     //FOR RES END
 
@@ -114,14 +89,51 @@ const PlaceView = () => {
                             setPlaceData(placeAllData);
                         }
                         if (childData.id === placeId) {
-                            setPlaceDetails(childData);
-                            setViewport({
-                                latitude: childData.latitude,
-                                longitude: childData.longitude,
-                                width: '100vw',
-                                height: '100vh',
-                                zoom: 15,
-                            });
+                                  const getPlacesData = async type => {
+                                    //FOR RETURENT AND HOTEL
+                                    try {
+                                        const {
+                                            data: { data },
+                                        } = await axios.get(`https://travel-advisor.p.rapidapi.com/${type}/list-by-latlng`, {
+                                            params: {
+                                                latitude: childData.latitude, // soth west
+                                                longitude: childData.longitude, // south west
+                                            },
+                                            //
+                                            headers: {
+                                                // 'content-type': 'application/json',
+                                                'X-RapidAPI-Host': 'travel-advisor.p.rapidapi.com',
+                                                'X-RapidAPI-Key': '753b1bed66mshe30f518502b96f6p174fdfjsn2621e6ff20a1',
+                                            },
+                                        });
+
+                                        return data;
+                                    } catch (error) {
+                                        console.log(error);
+                                    }
+                                    };
+
+                                        getPlacesData('hotels').then(data => {
+                                            
+                                    setHotels(data.filter((d, k) => d.name && d.ranking_geo && d.photo?.images?.original?.url));
+                                    });
+                                    getPlacesData('restaurants').then(data => {
+                                    setResturents(data.filter((d, k) => d.name && d.ranking_geo && d.photo?.images?.original?.url));
+                                    });
+
+                                    //FOR RETURENT AND HOTEL
+
+
+                                    setCenterLat(childData.latitude)
+                                    setCenterLong(childData.longitude)
+                                    setPlaceDetails(childData);
+                                    setViewport({
+                                        latitude: childData.latitude,
+                                        longitude: childData.longitude,
+                                        width: '100vw',
+                                        height: '100vh',
+                                        zoom: 15,
+                                    });
                         }
                     });
                 })
@@ -225,22 +237,39 @@ const PlaceView = () => {
                                         </button>
                                     </Marker>
                                 ))}
-                                {placeAllDataUS.map(park => (
-                                    <Marker latitude={park.latitude} longitude={park.longitude} anchor="bottom" key={park.id}>
+                                {hotels.map(park => (
+                                    <Marker latitude={park.latitude} longitude={park.longitude} anchor="bottom" key={park.location_id}>
                                         <button
                                             className="marker-btn"
                                             style={markarStyle}
                                             onClick={e => {
                                                 e.preventDefault();
-                                                setSelectedPark(park);
+                                                setSelectHotelandRes(park);
                                             }}
                                         >
-                                            <LocationOnIcon />
+                                            <HotelIcon />
                                             <br />
                                             {park.name}
                                         </button>
                                     </Marker>
                                 ))}
+                                 {resturents.map(park => (
+                                    <Marker latitude={park.latitude} longitude={park.longitude} anchor="bottom" key={park.location_id}>
+                                        <button
+                                            className="marker-btn"
+                                            style={markarStyle}
+                                            onClick={e => {
+                                                e.preventDefault();
+                                                setSelectHotelandRes(park);
+                                            }}
+                                        >
+                                            <RestaurantIcon />
+                                            <br />
+                                            {park.name}
+                                        </button>
+                                    </Marker>
+                                ))}
+
                                 {selectedPark ? (
                                     <Popup
                                         latitude={selectedPark.latitude}
@@ -257,6 +286,28 @@ const PlaceView = () => {
                                         </div>
                                     </Popup>
                                 ) : null}
+
+                                {selectHotelandRes ? (
+                                    <Popup
+                                        latitude={selectHotelandRes.latitude}
+                                        longitude={selectHotelandRes.longitude}
+                                        onClose={() => {
+                                            setSelectHotelandRes(null);
+                                        }}
+                                    >
+                                        <div>
+                                                <h2 style={{cursor:'pointer'}}><a onClick={()=>{window.open(`https://www.google.com/maps/?q=${selectHotelandRes.latitude},${selectHotelandRes.longitude}`);}} target="_blank">{selectHotelandRes.name}</a></h2>
+                                           
+                                            <p>{selectHotelandRes.location_string}</p>
+                                            <p>{selectHotelandRes.ranking}</p>
+                                            <p>Rating: {selectHotelandRes.rating}</p>
+                                            <p>Approx Distance: {(selectHotelandRes.distance).slice(0,4)} KM</p>
+                                            <p>{selectHotelandRes.hotel_class}</p>
+                                            <p>{selectHotelandRes.price}</p>
+                                        </div>
+                                    </Popup>
+                                ) : null}
+
                             </ReactMapGL>
                         </div>
                     </section>
