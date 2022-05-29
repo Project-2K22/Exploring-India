@@ -29,7 +29,7 @@ const Routes = () => {
                     <Route path="user-preference" element={<UserPreference />} />
                     <Route path="user-profile" element={<UserProfile />} />
                     <Route path="place-view/:id" element={<PlaceView />} />
-                    
+
                     {/* admins */}
                     <Route path="admin/register" element={<AdminRegister />} />
                     <Route path="admin/signin" element={<AdminLogin />} />
@@ -43,7 +43,7 @@ const Routes = () => {
                     <Route path="stackholder" element={<Stackholder />} />
 
                     <Route path="admin/*" element={<Navigate to="/admin/signin" replace />} />
-                    <Route path="/" element={<Navigate to="/login" replace />} />
+                    <Route path="/" element={<Navigate to="/home" replace />} />
                 </RS>
             </Router>
         </div>

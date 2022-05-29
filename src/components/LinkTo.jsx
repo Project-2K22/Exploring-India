@@ -1,10 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-const LinkTo = props => {
+const LinkTo = ({ children, to, newWindow }) => {
     return (
-        <Link style={{ textDecoration: 'none' }} to={props.to}>
-            {props.children}
+        <Link style={{ textDecoration: 'none' }} to={to} target={newWindow && '_blank'}>
+            {children}
         </Link>
     );
 };
