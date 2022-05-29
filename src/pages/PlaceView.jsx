@@ -8,6 +8,7 @@ import axios from 'axios';
 import BaseContainer from '../components/BaseContainer';
 import LinkTo from '../components/LinkTo';
 import SlideingCards from '../components/SlideingCards';
+import Footer from '../components/Footer';
 // firebase
 import { db, auth } from '../firebase/config';
 import { onAuthStateChanged } from 'firebase/auth';
@@ -336,6 +337,7 @@ const PlaceView = () => {
             ) : (
                 <Loader />
             )}
+            <Footer />
         </BaseContainer>
     );
 };

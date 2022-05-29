@@ -16,6 +16,7 @@ import Carousel from 'react-simply-carousel';
 import haversine from 'haversine';
 import Loader from '../components/Loader';
 import AboutUs from '../components/About';
+import Footer from '../components/Footer';
 
 const HomePage = () => {
     const [uid, setUid] = useState(null);
@@ -798,10 +799,9 @@ const HomePage = () => {
                     //FOR USER NOT LOGED IN END
                     <Loader />
                 )}
-            </Box>
-            <div style={{ marginY: '30px' }}>
                 <AboutUs />
-            </div>
+            </Box>
+            <Footer />
         </>
     );
 };
