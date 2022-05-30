@@ -2,11 +2,10 @@ import React from 'react';
 import { Stack, Box, Typography, Button, CssBaseline } from '@mui/material';
 import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
-import { useNavigate, useParams } from 'react-router-dom';
-import LinkTo from './LinkTo';
+import { useNavigate } from 'react-router-dom';
 
 const PlaceViewTop = props => {
-    const { id } = useParams();
+    // const { id } = useParams();
     const navigate = useNavigate();
 
     return (
@@ -62,22 +61,19 @@ const PlaceViewTop = props => {
                                         </Typography>
                                     </Box>
                                     <Box>
-                                        
-                                            <Button
-                                                
-                                                variant="outlined"
-                                                endIcon={<RemoveRedEyeIcon />}
-                                                sx={{
-                                                    borderColor: 'white',
-                                                    color: 'white',
-                                                    padding: '10px',
-                                                    paddingLeft: '30px',
-                                                    paddingRight: '30px',
-                                                }}
-                                            >
-                                                Open in Map
-                                            </Button>
-                                        
+                                        <Button
+                                            variant="outlined"
+                                            endIcon={<RemoveRedEyeIcon />}
+                                            sx={{
+                                                borderColor: 'white',
+                                                color: 'white',
+                                                padding: '10px',
+                                                paddingLeft: '30px',
+                                                paddingRight: '30px',
+                                            }}
+                                        >
+                                            Open in Map
+                                        </Button>
                                     </Box>
                                 </Stack>
                             </Box>
