@@ -36,6 +36,29 @@ const markarStyle = {
     padding: '0px',
     cursor: 'pointer',
 };
+const markarStyleForHot = {
+    background: 'transparent',
+    border: 'none',
+    outline: 'none',
+    color: 'red',
+    fontWeight: 'bold',
+    fontSize: '1rem',
+    textTransform: 'capitalize',
+    padding: '0px',
+    cursor: 'pointer',
+};
+const markarStyleForRes = {
+    background: 'transparent',
+    border: 'none',
+    outline: 'none',
+    color: 'gray',
+    fontWeight: 'bold',
+    fontSize: '9px',
+    textTransform: 'capitalize',
+    padding: '0px',
+    cursor: 'pointer',
+};
+
 
 const PlaceView = () => {
     const { id } = useParams();
@@ -247,15 +270,13 @@ const PlaceView = () => {
                                         <Marker latitude={park.latitude} longitude={park.longitude} anchor="bottom" key={park.location_id}>
                                             <button
                                                 className="marker-btn"
-                                                style={markarStyle}
+                                                style={markarStyleForHot}
                                                 onClick={e => {
                                                     e.preventDefault();
                                                     setSelectHotelandRes(park);
                                                 }}
                                             >
                                                 <HotelIcon />
-                                                <br />
-                                                {park.name}
                                             </button>
                                         </Marker>
                                     ))}
@@ -263,15 +284,13 @@ const PlaceView = () => {
                                         <Marker latitude={park.latitude} longitude={park.longitude} anchor="bottom" key={park.location_id}>
                                             <button
                                                 className="marker-btn"
-                                                style={markarStyle}
+                                                style={markarStyleForRes}
                                                 onClick={e => {
                                                     e.preventDefault();
                                                     setSelectHotelandRes(park);
                                                 }}
                                             >
                                                 <RestaurantIcon />
-                                                <br />
-                                                {park.name}
                                             </button>
                                         </Marker>
                                     ))}
