@@ -62,10 +62,10 @@ const SlideingCards = props => {
                                     onMouseMove={handleDrag}
                                 >
                                     {props.type === undefined &&
-                                        props.value.data.map(val => {
+                                        props.value.data.map((val,index) => {
                                             return (
                                                 <ImageCard
-                                                    key={val.id}
+                                                    key={index}
                                                     value={{
                                                         onClickFun: () => {
                                                             goToPageForSlide(val.id, props.value.uid, props.value.placeData);
@@ -79,11 +79,11 @@ const SlideingCards = props => {
                                             );
                                         })}
                                     {props.type === 'reshol' &&
-                                        props.value.data.map(val => {
+                                        props.value.data.map((val,index) => {
                                             return (
                                                 <ImageCard
                                                     type={props.type}
-                                                    key={val.id}
+                                                    key={index}
                                                     value={{
                                                         onClickFun: () => {
                                                             openGoogleMap(val.latitude,val.longitude);
@@ -105,18 +105,18 @@ const SlideingCards = props => {
         </Box>
     );
 };
-function onWheel(apiObj, ev) {
-    const isThouchpad = Math.abs(ev.deltaX) !== 0 || Math.abs(ev.deltaY) < 15;
+function onWheel(apiObj: scrollVisibilityApiType, ev: React.WheelEvent): void {
+  const isThouchpad = Math.abs(ev.deltaX) !== 0 || Math.abs(ev.deltaY) < 15;
 
-    if (isThouchpad) {
-        ev.stopPropagation();
-        return;
-    }
+  if (isThouchpad) {
+    ev.stopPropagation();
+    return;
+  }
 
-    if (ev.deltaY < 0) {
-        apiObj.scrollNext();
-    } else if (ev.deltaY > 0) {
-        apiObj.scrollPrev();
-    }
+  if (ev.deltaY < 0) {
+    apiObj.scrollNext();
+  } else if (ev.deltaY > 0) {
+    apiObj.scrollPrev();
+  }
 }
 export default SlideingCards;

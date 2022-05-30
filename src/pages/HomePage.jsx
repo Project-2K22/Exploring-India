@@ -510,7 +510,8 @@ const HomePage = () => {
             var t = giveMeARandomNumber(true, placeData.length - 1);
             p.push(t);
         }
-        return getThePlaceDataOfTheIndex(p);
+        var uniq = [...new Set(p)];//return the unique numbers
+        return getThePlaceDataOfTheIndex(uniq);
     }
 
     //ALL THE FUNCTIONS END
@@ -578,14 +579,14 @@ const HomePage = () => {
                                                     backwardBtnProps={{ children: '<', style: { display: 'none' } }}
                                                     itemsToShow={1}
                                                     itemsToScroll={1}
-                                                    speed={1000}
-                                                    infinite={true}
-                                                    easing="linear"
+                                                    speed={0}
+                                                    // infinite={true}
+                                                    // easing="linear"
                                                 >
-                                                    {placesSuggestedByUs(3).map(val => {
+                                                    {placesSuggestedByUs(5).map((val,index) => {
                                                         return (
                                                             <ImageCard
-                                                                key={val.id}
+                                                                key={index}
                                                                 value={{
                                                                     onClickFun: () => {
                                                                         goToPageForCarousel(val.id, uid);
@@ -723,14 +724,14 @@ const HomePage = () => {
                                                     backwardBtnProps={{ children: '<', style: { display: 'none' } }}
                                                     itemsToShow={1}
                                                     itemsToScroll={1}
-                                                    speed={1000}
-                                                    infinite={true}
-                                                    easing="linear"
+                                                    speed={0}
+                                                    // infinite={true}
+                                                    // easing="linear"
                                                 >
-                                                    {placesSuggestedByUs(3).map(val => {
+                                                    {placesSuggestedByUs(3).map((val,index) => {
                                                         return (
                                                             <ImageCard
-                                                                key={val.id}
+                                                                key={index}
                                                                 value={{
                                                                     onClickFun: () => {
                                                                         goToPageForCarousel(val.id);

@@ -29,6 +29,7 @@ import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import CancelIcon from '@mui/icons-material/Cancel';
 import HomeIcon from '@mui/icons-material/Home';
+import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
 import Loader from '../components/Loader';
 // firebase
 import { db, auth, storage } from '../firebase/config';
@@ -352,7 +353,16 @@ const UserProfile = () => {
             ) : (
                 <BaseContainer w="lg">
                     {/*MAIN PAGE DEGINE START HERE*/}
-                    <Box>back</Box>
+                    <Box>
+                            <Button
+                                onClick={() => navigate('/home')}
+                                variant="text"
+                                startIcon={<KeyboardBackspaceIcon />}
+                                sx={{ color: 'black' }}
+                            >
+                                back
+                            </Button>
+                        </Box>
                     <Stack
                         height="100vh"
                         p={11}
