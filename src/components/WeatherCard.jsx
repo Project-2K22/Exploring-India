@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Divider, Paper, Stack, Typography } from '@mui/material';
+import { Divider, Paper, Stack, Typography,Box } from '@mui/material';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import AirIcon from '@mui/icons-material/Air';
 import InvertColorsRoundedIcon from '@mui/icons-material/InvertColorsRounded';
@@ -9,10 +9,10 @@ import DarkModeRoundedIcon from '@mui/icons-material/DarkModeRounded';
 
 const WeatherCard = ({ lat, lon }) => {
     const [loading, setLoading] = useState(true);
+    const [loadingF, setLoadingF] = useState(true);
     const [weatherData, setWeatherData] = useState({});
-
+    const [weatherForecastData, setWeatherForecastData] = useState(null);
     const fetchWeatherData = async () => {
-        console.log(lat, lon);
         try {
             const response = await axios.get(
                 `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${process.env.REACT_APP_W_WEATHER_API_ID}&units=metric`
@@ -24,8 +24,22 @@ const WeatherCard = ({ lat, lon }) => {
         }
     };
 
+    const fetchWeatherForecastData = async () => {
+        try {
+            const response = await axios.get(
+                `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${process.env.REACT_APP_W_WEATHER_API_ID}&units=metric`
+            );
+            setWeatherForecastData((response.data.list));
+            setLoadingF(false);
+
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
     useEffect(() => {
         fetchWeatherData();
+        fetchWeatherForecastData();
     }, []);
 
     const timestampToTime = unix_timestamp => {
@@ -37,11 +51,30 @@ const WeatherCard = ({ lat, lon }) => {
         return formattedTime;
     };
 
+    const timestampToDate = unix_timestamp => {
+        var date = new Date(unix_timestamp * 1000);
+        return(date.getDate()+"/"+date.getMonth()+"/"+date.getFullYear())
+    };
+    const filterTheData = data =>{
+        var initial="";
+        let res=[];
+        for (let i=0;i<data.length;i++){
+            let v=data[i].dt_txt.split(" ")[0]
+            if(v!==initial){
+                res.push(data[i])
+                initial=v
+            }
+        }
+        res=res.slice(1,res.length)
+        return(res)
+    };
+
     return (
         <Paper sx={{ width: '80%', margin: '60px auto 0 auto', padding: '20px' }} variant="outlined">
-            {loading ? (
+            {loading || loadingF ? (
                 'Loading ... '
             ) : (
+            <Box>
                 <Stack direction={'row'} justifyContent="space-between" alignItems="center">
                     <Stack direction={'column'} justifyContent={'space-between'}>
                         <Stack direction={'row'} alignItems="center">
@@ -83,6 +116,27 @@ const WeatherCard = ({ lat, lon }) => {
                         </Stack>
                     </Stack>
                 </Stack>
+            <h4>Weather forecast for next 5 days </h4>
+            <Stack direction={'row'} justifyContent="space-evenly" alignItems="center">
+                    {filterTheData(weatherForecastData).map((val,index) => (
+                         <Stack direction={'column'} justifyContent={'space-between'}>
+                            <Stack direction={'column'} alignItems="center">
+                                <img src={`http://openweathermap.org/img/wn/${val.weather[0].icon}@2x.png`} alt="" />
+                                <Typography fontWeight={'bold'} fontSize="1.5vw">
+                                    {val.main.temp}
+                                    <span> &#8451;</span>
+                                </Typography>
+                                <Typography fontWeight={'bold'} fontSize="1vw">
+                                    {timestampToDate(val.dt)}
+                                </Typography>
+                            </Stack>
+                        </Stack>
+
+                ))}
+                       
+                    </Stack>
+                </Box>
+
             )}
         </Paper>
     );
