@@ -10,9 +10,9 @@ import LinkTo from '../components/LinkTo';
 import SlideingCards from '../components/SlideingCards';
 import Footer from '../components/Footer';
 // firebase+
-import { auth } from '../firebase/config';
+import { auth,db } from '../firebase/config';
 import { onAuthStateChanged } from 'firebase/auth';
-import { getDatabase, ref, child, get } from 'firebase/database';
+import { getDatabase, ref, child, get,update } from 'firebase/database';
 //FOR MAP
 import ReactMapGL, { Marker, Popup } from 'react-map-gl';
 import mapboxgl from 'mapbox-gl';
@@ -103,6 +103,12 @@ const PlaceView = () => {
                             setPlaceData(placeAllData);
                         }
                         if (childData.id === placeId) {
+                            //UPDATE THE VISITORS START
+                            var cvi=childData.visitors+1
+                            update(ref(db, `places/${childSnapshot.key}`), {
+                                    visitors: cvi,
+                                })
+                            //UPDATE THE VISITORS END
                             const getPlacesData = async type => {
                                 //FOR RETURENT AND HOTEL
                                 try {
@@ -117,7 +123,7 @@ const PlaceView = () => {
                                         headers: {
                                             // 'content-type': 'application/json',
                                             'X-RapidAPI-Host': 'travel-advisor.p.rapidapi.com',
-                                            'X-RapidAPI-Key': '753b1bed66mshe30f518502b96f6p174fdfjsn2621e6ff20a1',
+                                            'X-RapidAPI-Key': 'e43e1adb8emshe6936e91d35fc2ap13d372jsn1c6b9d903fec',
                                         },
                                     });
 
